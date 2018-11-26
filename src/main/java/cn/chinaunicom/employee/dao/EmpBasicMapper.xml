@@ -136,9 +136,9 @@
 			( SELECT MEANING FROM hades_lookups WHERE hades_lookups.lookup_type = 'CN_RACE' AND LOOKUP_CODE = T1.nation ) AS nation 
 		FROM
 			EHRBASE_EMP_BASIC T1
-			INNER JOIN EHRBASE_ORGANIZATION_ALL eoa ON t1.org_id = eoa.ORGANIZATION_ID 
+			INNER JOIN EHRBASE_ORGANIZATION_ALL eoa ON t1.org_id = eoa.ORGANIZATION_ID  and eoa.BUSINESS_GROUP_ID = 101 
 		WHERE
-		1 = 1
+		1 = 1 
 		<if test="employeeNumber != null and employeeNumber != ''">
             AND t1.employee_number like concat(#{employeeNumber},'%')
         </if>
@@ -161,6 +161,7 @@
 		SELECT COUNT(1) as total
 			FROM
 			EHRBASE_EMP_BASIC T1
+						INNER JOIN EHRBASE_ORGANIZATION_ALL eoa ON t1.org_id = eoa.ORGANIZATION_ID  and eoa.BUSINESS_GROUP_ID = 101 
 		WHERE
 			1 = 1 
 		<if test="employeeNumber != null and employeeNumber != ''">
