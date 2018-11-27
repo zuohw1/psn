@@ -122,7 +122,14 @@ public interface EmpBasicService extends IHrService<EmpBasic> {
 	 */
 	List<Map<String,Object>> queryPsnQualificationsByPersonId(Long personId);
 	
-	
+	/**
+	 * 根据组织名称查询组织列表
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param orgName
+	 * @return
+	 */
+	public Page<Map<String, Object>> queryOrgListByName(Integer pageNumber,Integer pageSize,String orgName);
 
 
 }

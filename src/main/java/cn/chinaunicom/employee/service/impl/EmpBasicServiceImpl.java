@@ -362,4 +362,16 @@ public class EmpBasicServiceImpl extends HrServiceImpl<EmpBasicMapper, EmpBasic>
 		
 		return returnList;
 	}
+
+	@Override
+	public Page<Map<String, Object>> queryOrgListByName(Integer pageNumber, Integer pageSize, String orgName) {
+	
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(pageNumber, pageSize);
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("orgName", orgName);
+		page.setSearchCount(false);
+		long totalCount= this.mapper.queryOrgListByNameCount(params).get("total");
+		page.setTotal(totalCount);
+		return page.setRecords(this.mapper.queryOrgListByName(page,params));
+	}
 }

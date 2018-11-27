@@ -1,7 +1,6 @@
 package cn.chinaunicom.employee.controller;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.baomidou.mybatisplus.plugins.Page;
+
 import cn.chinaunicom.employee.entity.EmpBasic;
 import cn.chinaunicom.employee.entity.EmpBasicDTO;
 import cn.chinaunicom.employee.service.EmpBasicService;
@@ -27,8 +29,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * **************************************
@@ -74,7 +74,7 @@ public class EmpBasicController {
     @GetMapping("/list")
     public ResponseEntity<Object> getEmpBasicList(
     		@RequestParam("pageNumber") Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "100") Integer pageSize,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
             @RequestParam(value = "employeeNumber", required = false) String employeeNumber, 
             @RequestParam(value = "fullName", required = false) String fullName,
             @RequestParam(value = "org_id", required = false) String org_id,
@@ -167,6 +167,43 @@ public class EmpBasicController {
 	
         if(personList!=null ) {
         	return new ResponseEntity<>(personList, HttpStatus.OK);
+        }else {
+        	MessageResponse dto = new MessageResponse();
+        	String msg = "未查询到人员数据";
+            dto.setMsg(msg);
+            return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
+        }
+      
+      
+    }
+	
+	
+	@ApiOperation(value = "根据组织名称获取组织列表", notes = "根据组织名称获取组织列表", response = List.class, httpMethod = "GET")
+    @ApiImplicitParams({
+    		@ApiImplicitParam(name = "pageNumber", value = "页码", required = true, dataType = "Integer"),
+    		@ApiImplicitParam(name = "pageSize", value = "每页数量", required = true, dataType = "Integer"),
+            @ApiImplicitParam(name = "name", value = "组织名称", required = true, dataType = "String"),
+    })
+    @ApiResponses({
+            @ApiResponse(
+                    code = 200,
+                    message = "获取组织数据成功",
+                    response = Page.class
+            ),
+            @ApiResponse(
+                    code = 404,
+                    message = "未查询到组织数据"
+            )
+    })
+	@GetMapping("/queryOrgListByName")
+    public ResponseEntity<Object> queryOrgListByName(@RequestParam("pageNumber") Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+            @RequestParam(value = "name", defaultValue = "@@") String orgName)
+	{
+		Page<Map<String,Object>> orgList = service.queryOrgListByName(pageNumber, pageSize, orgName);
+	
+        if(orgList!=null ) {
+        	return new ResponseEntity<>(orgList, HttpStatus.OK);
         }else {
         	MessageResponse dto = new MessageResponse();
         	String msg = "未查询到人员数据";

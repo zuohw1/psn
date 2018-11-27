@@ -106,6 +106,21 @@ public interface EmpBasicMapper extends HrBaseMapper<EmpBasic> {
 	 */
 	List<Map<String,Object>> queryPsnQualificationsAppByPersonId(Map<String,Object> params);
 	
+	/**
+	 * 根据组织名称查询组织列表
+	 * @param rowBounds
+	 * @param params
+	 * @return
+	 */
+	List<Map<String, Object>> queryOrgListByName(RowBounds rowBounds, Map<String,Object> params);
+	/**
+	 * 根据组织名称查询组织总数
+	 * @param rowBounds
+	 * @param params
+	 * @return
+	 */
+	Map<String,Long> queryOrgListByNameCount(Map<String,Object> params);
+	
 	
 
 }

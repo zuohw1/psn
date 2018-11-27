@@ -479,4 +479,28 @@
 					</otherwise>
 			</choose>
 	</select>
+	<!-- 根据组织名称查询组织列表 -->
+	<select id ="queryOrgListByName" resultType = "java.util.HashMap">
+			select t1.ORGANIZATION_ID orgId,t1.NAME orgName from ehrbase_organization_all t1 where t1.BUSINESS_GROUP_ID = 101 
+			<choose>
+					<when test="orgName !=null and orgName != ''">
+						and t1.name like concat('%',#{orgName},'%') 
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+	<!-- 根据组织名称查询组织列表总数 -->
+	<select id ="queryOrgListByNameCount" resultType = "java.util.HashMap">
+			select count(1) total from ehrbase_organization_all t1 where t1.BUSINESS_GROUP_ID = 101 
+			<choose>
+					<when test="orgName !=null and orgName != ''">
+						and t1.name like concat('%',#{orgName},'%') 
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
 </mapper>
