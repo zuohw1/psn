@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiResponses;
 /**
  * **************************************
  * 描述: 
- * @ClassName: cn.chinaunicom.func.controller.FuncRegisterController 
+ * @ClassName: cn.chinaunicom.employee.controller.EmpBasicController
  * @author zhanggang 
  * @since 2018-11-06
  * @version V1.0
