@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chinaunicom.employee.dao.EmpBasicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chinaunicom.employee.entity.EmpBasic">
+        <id column="person_id" property="personId" />
+        <result column="org_id" property="orgId" />
+        <result column="person_type_id" property="personTypeId" />
+        <result column="job_id" property="jobId" />
+        <result column="grade_id" property="gradeId" />
+        <result column="effective_start_date" property="effectiveStartDate" />
+        <result column="effective_end_date" property="effectiveEndDate" />
+        <result column="employee_number" property="employeeNumber" />
+        <result column="full_name" property="fullName" />
+        <result column="previous_name" property="previousName" />
+        <result column="sex" property="sex" />
+        <result column="date_of_birth" property="dateOfBirth" />
+        <result column="nationality" property="nationality" />
+        <result column="nation" property="nation" />
+        <result column="province" property="province" />
+        <result column="town_of_birth" property="townOfBirth" />
+        <result column="region_of_birth" property="regionOfBirth" />
+        <result column="household_register_place" property="householdRegisterPlace" />
+        <result column="household_register_type" property="householdRegisterType" />
+        <result column="user_person_type" property="userPersonType" />
+        <result column="national_identifier" property="nationalIdentifier" />
+        <result column="state_of_health" property="stateOfHealth" />
+        <result column="specialties" property="specialties" />
+        <result column="hobbies" property="hobbies" />
+        <result column="marital_status" property="maritalStatus" />
+        <result column="email_address" property="emailAddress" />
+        <result column="english_name" property="englishName" />
+        <result column="name_of_letters" property="nameOfLetters" />
+        <result column="quick_access_code" property="quickAccessCode" />
+        <result column="blood_type" property="bloodType" />
+        <result column="disability_flag" property="disabilityFlag" />
+        <result column="immigrated_foreign_flag" property="immigratedForeignFlag" />
+        <result column="plan_of_retirement_date" property="planOfRetirementDate" />
+        <result column="other_user_person_type" property="otherUserPersonType" />
+        <result column="initial_job_start_date" property="initialJobStartDate" />
+        <result column="working_ages_start_date" property="workingAgesStartDate" />
+        <result column="interval_working_ages_month" property="intervalWorkingAgesMonth" />
+        <result column="initial_job_type" property="initialJobType" />
+        <result column="join_cuc_date" property="joinCucDate" />
+        <result column="join_cuc_channel" property="joinCucChannel" />
+        <result column="join_cuc_other_channel" property="joinCucOtherChannel" />
+        <result column="staff_sort_num" property="staffSortNum" />
+        <result column="employee_number_old" property="employeeNumberOld" />
+        <result column="ufida_system_number" property="ufidaSystemNumber" />
+        <result column="ufida_system_join_channel" property="ufidaSystemJoinChannel" />
+        <result column="join_office_date" property="joinOfficeDate" />
+        <result column="add_staff_date" property="addStaffDate" />
+        <result column="add_staff_type" property="addStaffType" />
+        <result column="add_staff_comments" property="addStaffComments" />
+        <result column="social_security_num" property="socialSecurityNum" />
+        <result column="create_by" property="createBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="attribute1" property="attribute1" />
+        <result column="attribute2" property="attribute2" />
+        <result column="attribute3" property="attribute3" />
+        <result column="attribute4" property="attribute4" />
+        <result column="attribute5" property="attribute5" />
+        <result column="attribute6" property="attribute6" />
+        <result column="attribute7" property="attribute7" />
+        <result column="attribute8" property="attribute8" />
+        <result column="attribute9" property="attribute9" />
+        <result column="attribute10" property="attribute10" />
+        <result column="synchronization_state" property="synchronizationState" />
+        <result column="join_cuc_channel_new" property="joinCucChannelNew" />
+        <result column="join_cuc_other_channel_new" property="joinCucOtherChannelNew" />
+        <result column="join_cuc_channel_mark_new" property="joinCucChannelMarkNew" />
+        <result column="politics_landscape_name" property="politicsLandscapeName" />
+        <result column="education_experience" property="educationExperience" />
+        <result column="degree" property="degree" />
+        <result column="staff_category" property="staffCategory" />
+        <result column="assignment_category" property="assignmentCategory" />
+        <result column="job_name" property="jobName" />
+        <result column="qualification_level" property="qualificationLevel" />
+        <result column="grade_name" property="gradeName" />
+        <result column="people_group" property="peopleGroup" />
+        <result column="pay_regulation" property="payRegulation" />
+        <result column="email_name" property="emailName" />
+        <result column="alias_name" property="aliasName" />
+        <result column="join_telecom_date" property="joinTelecomDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        person_id, org_id, person_type_id, job_id, grade_id, effective_start_date, effective_end_date, employee_number, full_name, previous_name, sex, date_of_birth, nationality, nation, province, town_of_birth, region_of_birth, household_register_place, household_register_type, user_person_type, national_identifier, state_of_health, specialties, hobbies, marital_status, email_address, english_name, name_of_letters, quick_access_code, blood_type, disability_flag, immigrated_foreign_flag, plan_of_retirement_date, other_user_person_type, initial_job_start_date, working_ages_start_date, interval_working_ages_month, initial_job_type, join_cuc_date, join_cuc_channel, join_cuc_other_channel, staff_sort_num, employee_number_old, ufida_system_number, ufida_system_join_channel, join_office_date, add_staff_date, add_staff_type, add_staff_comments, social_security_num, create_by, create_date, update_by, update_date, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7, attribute8, attribute9, attribute10, synchronization_state, join_cuc_channel_new, join_cuc_other_channel_new, join_cuc_channel_mark_new, politics_landscape_name, education_experience, degree, staff_category, assignment_category, job_name, qualification_level, grade_name, people_group, pay_regulation, email_name, alias_name, join_telecom_date
+    
+    </sql>
+    <!-- 花名册查询，普通查询 -->
+    <select id="queryPsnRoster" resultType="java.util.HashMap">
+		SELECT
+			T1.PERSON_ID AS personId,
+			substr( t1.grade_name, instr( t1.grade_name, '.' ) + 1 ) AS gradeName,
+			t1.people_group AS peopleGroup,
+			T1.FULL_NAME AS fullName,
+			T1.EMPLOYEE_NUMBER AS employeeNumber,
+			t1.national_identifier AS nationalIdentifier,
+			T1.SEX AS sex,
+		IF
+			( DATE_FORMAT ( T1.DATE_OF_BIRTH, '%Y-%m-%d' ) = '0000-00-00', '', DATE_FORMAT ( T1.DATE_OF_BIRTH, '%Y-%m-%d' ) ) AS dateOfBirth,
+			TIMESTAMPDIFF( YEAR, t1.date_of_birth, CURDATE( ) ) AS age,
+		IF
+			( DATE_FORMAT ( T1.INITIAL_JOB_START_DATE, '%Y-%m-%d' ) = '0000-00-00', '', DATE_FORMAT ( T1.INITIAL_JOB_START_DATE, '%Y-%m-%d' ) ) AS initialJobStartDate,
+			t1.job_name AS jobName,
+			eoa.NAME AS orgName,
+			(
+		CASE
+			
+			WHEN eoa.ORG2 != '42125' THEN
+			eoa.NAME 
+			WHEN eoa.ORG2 = '42125' THEN
+			SUBSTR( eoa.NAME, INSTR( eoa.NAME, '-' ) + 1, LENGTH( eoa.NAME ) ) 
+		END 
+			) AS attribute1,
+			eoa.organization_id AS orgId,
+			t1.education_experience AS educationExperience,
+			t1.degree AS degree,
+		IF
+			( DATE_FORMAT ( T1.JOIN_CUC_DATE, '%Y-%m-%d' ) = '0000-00-00', '', DATE_FORMAT ( T1.JOIN_CUC_DATE, '%Y-%m-%d' ) ) AS joinCucDate,
+			T1.USER_PERSON_TYPE AS userPersonType,
+			(SELECT meaning FROM hades_lookups WHERE  hades_lookups.lookup_type ='CN_HUKOU_TYPE'  AND LOOKUP_CODE = T1.HOUSEHOLD_REGISTER_TYPE )
+			 AS householdRegisterType,
+			t1.staff_category AS staffCategory,
+			(SELECT meaning FROM hades_lookups WHERE  hades_lookups.lookup_type ='CN_HUKOU_LOCN'  AND LOOKUP_CODE = T1.household_register_place) 
+			AS householdRegisterPlace,
+			T1.JOIN_CUC_CHANNEL AS joinCucChannel,
+			t1.assignment_category AS assignmentCategory,
+			( SELECT MEANING FROM hades_lookups WHERE hades_lookups.lookup_type = 'CN_PARTY_TYPE' AND LOOKUP_CODE = T1.politics_landscape_name ) 
+			AS politicsLandscapeName,
+			( SELECT MEANING FROM hades_lookups WHERE hades_lookups.lookup_type = 'CN_RACE' AND LOOKUP_CODE = T1.nation ) AS nation 
+		FROM
+			EHRBASE_EMP_BASIC T1
+			INNER JOIN EHRBASE_ORGANIZATION_ALL eoa ON t1.org_id = eoa.ORGANIZATION_ID  and eoa.BUSINESS_GROUP_ID = 101 
+		WHERE
+		1 = 1 
+		<if test="employeeNumber != null and employeeNumber != ''">
+            AND t1.employee_number like concat(#{employeeNumber},'%')
+        </if>
+        
+		<if test="fullName != null and fullName != ''">
+            AND t1.full_name like concat(#{ fullName },'%') 
+        </if>
+		<if test="org_id != null and org_id != ''">
+            AND t1.org_id = #{ org_id }
+        </if>
+		<if test="userPersonType != null and userPersonType != ''">
+            AND t1.user_person_type = #{userPersonType} 
+        </if>
+        
+		<!-- order by eoa.CNC_ORG_LEVEL  -->
+		
+	</select>
+	<!-- 花名册列表总数查询 -->
+	<select id="queryPsnRosterTotal" resultType="java.util.HashMap">
+		SELECT COUNT(1) as total
+			FROM
+			EHRBASE_EMP_BASIC T1
+						INNER JOIN EHRBASE_ORGANIZATION_ALL eoa ON t1.org_id = eoa.ORGANIZATION_ID  and eoa.BUSINESS_GROUP_ID = 101 
+		WHERE
+			1 = 1 
+		<if test="employeeNumber != null and employeeNumber != ''">
+            AND t1.employee_number like concat(concat('%',#{employeeNumber}),'%')
+        </if>
+        
+		<if test="fullName != null and fullName != ''">
+            AND t1.full_name like concat(concat('%',#{ fullName }),'%') 
+        </if>
+		<if test="org_id != null and org_id != ''">
+            AND t1.org_id = #{ org_id }
+        </if>
+		<if test="userPersonType != null and userPersonType != ''">
+            AND t1.user_person_type = #{userPersonType} 
+        </if>
+        
+		
+	</select>
+	<!-- 根据人员Id查询基本信息 -->
+	<select id="queryPsnBasicInfoById" resultType="java.util.HashMap">
+		SELECT
+			t1.name_of_letters,
+			t1.user_person_type,
+			t1.national_identifier,
+			DATE_FORMAT( t1.date_of_birth, '%Y-%m-%d' ) AS date_of_birth,
+		CASE
+			WHEN t1.sex = 'M' THEN
+			'男性' 
+			WHEN t1.sex = 'F' THEN
+			'女性' ELSE '' 
+			END AS sex,
+			t1.blood_type,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'NATIONALITY' AND lookup_code = t1.nationality ) nationality,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_RACE' AND lookup_code = t1.nation ) nation,
+			t1.town_of_birth,
+			t1.region_of_birth,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HUKOU_TYPE' AND lookup_code = t1.household_register_type ) household_register_type,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HUKOU_LOCN' AND lookup_code = t1.household_register_place ) household_register_place,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'MAR_STATUS' AND lookup_code = t1.marital_status ) marital_status,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HEALTH_STATUS' AND lookup_code = t1.state_of_health ) state_of_health,
+			t1.email_address,
+			t1.social_security_num,
+			'' enjoy_tax_perfer,
+			DATE_FORMAT( t1.initial_job_start_date, '%Y-%m-%d' ) initial_job_start_date,
+			DATE_FORMAT( t1.join_cuc_date, '%Y-%m-%d' ) join_cuc_date,
+			t1.join_cuc_channel,
+			t1.join_cuc_other_channel,
+			t1.specialties,
+			DATE_FORMAT( t1.plan_of_retirement_date, '%Y-%m-%d' ) plan_of_retirement_date,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_OTHER_PER_TYPE' AND lookup_code = t1.other_user_person_type ) other_user_person_type,
+			t1.join_cuc_other_channel_new,
+			t1.join_cuc_channel_new,
+			t1.join_cuc_channel_mark_new,
+			DATE_FORMAT( t1.working_ages_start_date, '%Y-%m-%d' ),
+			t1.interval_working_ages_month,
+			DATE_FORMAT( t1.join_office_date, '%Y-%m-%d' ),
+			DATE_FORMAT( t1.add_staff_date, '%Y-%m-%d' ) add_staff_date,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_ADD_WAY' AND lookup_code = t1.add_staff_type ) add_staff_type,
+			t1.add_staff_comments,
+			t1.staff_sort_num,
+			t1.ufida_system_number 
+		FROM
+			ehrbase_emp_basic t1 where 1 = 1 
+		<choose>
+			<when test="personId !=null and personId != ''">
+				and t1.person_id = #{personId}
+			</when>
+			<otherwise>
+				and 1=2
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id = "queryPsnMobilePhoneById" resultType="java.util.HashMap">
+		select phone_number as  mobilePhone from ehrbase_emp_phones where person_id = #{personId} and
+		phone_type = 'M' and date_from
+		= (select max(date_from) from ehrbase_emp_phones where person_id =#{personId} and phone_type = 'M')
+	</select>
+	<!-- 根据人员Id查询分配信息 -->
+	<select id = "queryPsnAssignmentsById" resultType = "cn.chinaunicom.employee.entity.AssignmentsInfo">
+		SELECT
+			t1.assignment_id assignmentId,
+			t1.person_id personId,
+			t1.organization_id organizationId,
+			t1.position_id positionId,
+			t1.job_id jobId,
+			t1.source_organization_id sourceOrganizationId,
+			t1.effective_start_date effectiveStartDate,
+			t1.effective_end_date effectiveEndDate,
+			t1.grade_id gradeId,
+			t1.primary_flag primaryFlag,
+			t1.assignment_sequence assignmentSequence,
+			t1.assignment_number assignmentNumber,
+			t1.staff_post_name staffPostName,
+			t1.payroll payroll,
+			t1.assignment_type assignmentType,
+			t1.assignment_category assignmentCategory,
+			t1.staff_category staffCategory,
+			t1.leader_id leaderId,
+			t1.leader_num leaderNum,
+			t1.employer_name employerName,
+			t1.tax_place taxPlace,
+			t1.pay_of_social_security_place payOfSocialSecurityPlace,
+			t1.create_by createBy,
+			t1.create_date createDate,
+			t1.update_by updateBy,
+			t1.update_date updateDate,
+			t1.attribute1,
+			t1.attribute2,
+			t1.attribute3,
+			t1.attribute4,
+			t1.attribute5,
+			t1.attribute6,
+			t1.attribute7,
+			t1.attribute8,
+			t1.attribute9,
+			t1.attribute10,
+			t1.synchronization_state synchronizationState,
+			t1.people_group_id peopleGroupId,
+			t1.company_name companyName,
+			t1.people_group peopleGroup,
+			t1.assignment_status_type_id assignmentStatusTypeId,
+			t1.cuc_org_min_cost cucOrgMinCost,
+			t1.cuc_org_min_per_type cucOrgMinPerType 
+		FROM
+			ehrbase_assignments_all t1
+		WHERE
+			t1.effective_start_date &lt;= NOW() AND t1.effective_end_date &gt;= NOW()
+			AND t1.primary_flag = 'Y'
+		<choose>
+				<when test="personId !=null and personId != ''">
+					and t1.person_id = #{personId}
+				</when>
+				<otherwise>
+					and 1=2
+				</otherwise>
+		</choose>
+	</select>
+	<select id = "queryPsnMgrOtherInfoById"  resultType = "java.util.HashMap">
+		select personid as personId,
+				is_remote_senior as isRomoteSenior,
+				workingplace as workingPlace,
+				spouse_living_city as spouseLivingCity
+		from ehrcuc_hmhat_manager_other
+		where personid = #{personId}
+	</select>
+	<!-- 根据人员Id查询所有学历信息 -->
+	<select id = "queryPsnEducationsByPersonId" resultType = "java.util.HashMap">
+		SELECT
+			DATE_FORMAT( educated_start_date, '%Y-%m-%d' ) educatedStartDate,
+			DATE_FORMAT( educated_end_date, '%Y-%m-%d' ) educatedEndDate,
+			college_name collegeName,
+			profession,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_EDU_LEVEL' AND lookup_code = education_experience ) educationExperience,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_DEGREE' AND lookup_code = degree ) degree,
+			( CASE education_high_flag WHEN 'Y' THEN '是' WHEN 'N' THEN '否' ELSE '' END ) educationHighFlag 
+		FROM
+			ehrbase_emp_educations tt where tt.person_id =  #{personId}
+	</select>
+	<!-- 根据人员Id查询工作经历信息 -->
+	<select id = "queryPsnPreviousJobsByPersonId" resultType = "java.util.HashMap">
+		select date_format(t1.job_start_date,'%Y-%m-%d') jobStartDate,
+		       date_format(t1.job_end_date,'%Y-%m-%d')  jobEndDate,
+		       t1.previous_employer_name previousEmployerName,
+		       t1.previous_department_name previousDepartmentName,
+		       t1.job_duty_name jobDutyName,
+		       ( case t1.company_internal_flag when 'Y' then '是' when 'N' then '否' else '' end ) companyInternalFlag,
+		       (select meaning from hades_lookups where lookup_type = 'CNC_INDUSTRY' and lookup_code =t1.working_of_industry ) workingOfIndustry,
+		       (select meaning from hades_lookups where lookup_type = 'CNC_ENGAGEMENT' and lookup_code =t1.previous_profession ) previousProfession
+		  from EHRBASE_EMP_PREVIOUS_JOBS t1 where 1=1 
+		  <choose>
+				<when test="personId !=null and personId != ''">
+					and t1.person_id = #{personId}
+				</when>
+				<otherwise>
+					and 1=2
+				</otherwise>
+		</choose>
+	</select>
+	<!--根据人员Id查询职业技能信息   -->
+	<select id = "queryPsnQualificationsByPersonId" resultType = "java.util.HashMap" >
+		SELECT
+			t1.qualification_awarded_org qualificationAwardedOrg,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_GZMC_1109' AND lookup_code = t1.qualification_awarded_name ) qualificationAwardedName,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_SKILL_LEVEL' AND lookup_code = t1.grade_attained ) gradeAttained,
+			( CASE t1.major_qualification_flag WHEN 'Y' THEN '是' WHEN 'N' THEN '否' ELSE '' END ) majorQualificationFlag,
+			t1.qualification_awarded_comments qualificationAwardedComments 
+		FROM
+			ehrbase_EMP_QUALIFICATIONS t1 
+		WHERE
+			1 = 1 
+			 <choose>
+					<when test="personId !=null and personId != ''">
+						and t1.person_id = #{personId}
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+	<!--根据人员Id查询专业技术资格信息   -->
+	<select id = "queryPsnTechQualificationsByPersonId" resultType = "java.util.HashMap" >
+		SELECT
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_ZYJSZGXL_1109' AND lookup_code = t1.qualification_category ) qualificationCategory,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_ZYJSZGMC_1109' AND lookup_code = t1.qualification_name ) qualificationName,
+			DATE_FORMAT( t1.qualification_start_date, '%Y-%m-%d' ) qualificationStartDate,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_TECH_WAY' AND lookup_code = t1.qualification_channel ) qualificationChannel 
+		FROM
+			ehrbase_emp_tech_qualification t1 where 1=1
+			 <choose>
+					<when test="personId !=null and personId != ''">
+						and t1.person_id = #{personId}
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+	<!--根据人员Id查询奖励信息   -->
+	<select id = "queryPsnRewardByPersonId" resultType = "java.util.HashMap" >
+		SELECT
+			DATE_FORMAT( t1.approval_date, '%Y-%m-%d' ) approvalDate,
+			t1.reward_name rewardName,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'TYPEITEM_CNC_AWARD_TYPE' AND lookup_code = t1.reward_type ) rewardType,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'TYPEITEM_CNC_AWARD_TYPE' AND lookup_code = t1.reward_level ) rewardLevel,
+			t1.rewarded_org_name rewardedOrgName,
+			t1.reward_amount rewardAmount 
+		FROM
+			ehrbase_emp_reward t1 where 1 = 1
+			 <choose>
+					<when test="personId !=null and personId != ''">
+						and t1.person_id = #{personId}
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+	<!--根据人员Id查询处分信息   -->
+	<select id = "queryPsnPunishmentByPersonId" resultType = "java.util.HashMap">
+		SELECT
+			t1.punishment_name punishmentName,
+			DATE_FORMAT( t1.punished_date, '%Y-%m-%d' ) punishedDate,
+			t1.punishment_type punishmentType,
+			t1.punished_reason punishedReason,
+			t1.org_of_punished orgOfPunished 
+		FROM
+			ehrbase_emp_punishment t1 where 1=1 
+			<choose>
+					<when test="personId !=null and personId != ''">
+						and t1.person_id = #{personId}
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+	<!--根据人员Id查询党派信息   -->
+	<select id = "queryPsnPoliticsLandscapeByPersonId" resultType = "java.util.HashMap">
+		SELECT
+			DATE_FORMAT( t1.join_start_date, '%Y-%m-%d' ) joinStartDate,
+			DATE_FORMAT( t1.join_end_date, '%Y-%m-%d' ) joinEndDate,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_PARTY_TYPE' AND lookup_code = t1.politics_landscape_name ) politicsLandscapeName,
+			DATE_FORMAT( t1.join_party_date, '%Y-%m-%d' ) joinPartyDate,
+			t1.org_of_partisan orgOfPartisan,
+			t1.duty_of_partisan  orgOfPartisan
+		FROM
+			ehrbase_EMP_POLITICS_LANDSCAPE t1 where 1 = 1 
+			<choose>
+					<when test="personId !=null and personId != ''">
+						and t1.person_id = #{personId}
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+	<!--根据人员Id查询专业技术资格聘任   -->
+	<select id ="queryPsnTechAppointByPersonId" resultType = "java.util.HashMap">
+	
+		SELECT
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_ZYJSZGXL_1109' AND lookup_code = t1.appoint_category ) appointCategory,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_ZYJSZGMC_1109' AND lookup_code = t1.appoint_name ) appointName,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_ZYJSZGDJ' AND lookup_code = t1.appoint_level ) appointLevel,
+			t1.approval_unit approvalUnit,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_APP_CIRCS' AND lookup_code = t1.appoint_comments ) appointComments 
+		FROM
+			ehrbase_emp_tech_appoint t1 where 1=1
+			<choose>
+					<when test="personId !=null and personId != ''">
+						and t1.person_id = #{personId}
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+		
+	</select>
+	<!-- 根据人员Id查询职业鉴定信息 -->
+	<select id ="queryPsnQualificationsAppByPersonId" resultType = "java.util.HashMap">
+		SELECT
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_WORK_TYPE' AND lookup_code = t1.qualification_awarded_name ) qualificationAwardedName,
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_SKILL_LEVEL' AND lookup_code = t1.grade_attained ) gradeAttained,
+			DATE_FORMAT( t1.qualification_awarded_date, '%Y-%m-%d' ) qualificationAwardedDate,
+			DATE_FORMAT( t1.qualification_end_date, '%Y-%m-%d' ) qualificationEndDate,
+			t1.qualification_certificate_num  qualificationCertificateNum
+		FROM
+			ehrbase_emp_qualifications_app t1 where 1 = 1
+			<choose>
+					<when test="personId !=null and personId != ''">
+						and t1.person_id = #{personId}
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+	<!-- 根据组织名称查询组织列表 -->
+	<select id ="queryOrgListByName" resultType = "java.util.HashMap">
+			select t1.ORGANIZATION_ID orgId,t1.NAME orgName from ehrbase_organization_all t1 where t1.BUSINESS_GROUP_ID = 101 
+			<choose>
+					<when test="orgName !=null and orgName != ''">
+						and t1.name like concat('%',#{orgName},'%') 
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+	<!-- 根据组织名称查询组织列表总数 -->
+	<select id ="queryOrgListByNameCount" resultType = "java.util.HashMap">
+			select count(1) total from ehrbase_organization_all t1 where t1.BUSINESS_GROUP_ID = 101 
+			<choose>
+					<when test="orgName !=null and orgName != ''">
+						and t1.name like concat('%',#{orgName},'%') 
+					</when>
+					<otherwise>
+						and 1=2
+					</otherwise>
+			</choose>
+	</select>
+</mapper>
