@@ -64,10 +64,10 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
  */
 public class MyBatisPlusGenerator {
 
-    private static String packageName="employee";    //文件路径
+    private static String packageName="platform";    //文件路径
     private static String authorName="zhanggang";     //作者
-    private static String table="ehrbase_emp_basic";                  //table名字
-    private static String prefix="ehrbase_";                     //table前缀
+    private static String table="pub_billtemplet_b";                  //table名字
+    private static String prefix="pub_";                     //table前缀
     private static File file = new File("");
     private static String path = file.getAbsolutePath();
     private static String DB_URL = "jdbc:mysql://127.0.0.1:3306/cu-hr2.0?characterEncoding=utf8";
