@@ -15,4 +15,11 @@ update ehrbase_emp_basic set create_date = null where create_date = '0000-00-00 
 update ehrbase_emp_basic set update_date = null where update_date = '0000-00-00';
 
 update ehrbase_emp_qualifications_app set qualification_end_date = NULL where qualification_end_date = '0000-00-00';
-	update ehrbase_emp_qualifications_app set qualification_awarded_date = NULL where qualification_awarded_date = '0000-00-00';
+update ehrbase_emp_qualifications_app set qualification_awarded_date = NULL where qualification_awarded_date = '0000-00-00';
+
+update ehrbase_assignments_all set create_date = null where create_date = '0000-00-00 00:00:00'  ;
+		
+update ehrbase_assignments_all set update_date = null where update_date = '0000-00-00 00:00:00'  ;
+		
+update ehrbase_assignments_all set create_date = null where person_id <= 25 ; 
+update ehrbase_assignments_all set update_date = null where person_id <= 25 ; 
