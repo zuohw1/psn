@@ -91,6 +91,7 @@ public class EmpBasicServiceImpl extends HrServiceImpl<EmpBasicMapper, EmpBasic>
 	@Override
 	public List<EmpBasicDTO> queryPsnBasicInfoById(Long personId) {
 		Map<String,Object> params = new HashMap<String,Object>();
+		
 		params.put("personId", personId);
 		Map<String,Object> dataMap = this.mapper.queryPsnBasicInfoById(params);
 		//将dataMap加工为含中文字段名称的Map，示例：Map<key='fullName',value={dispName:姓名，value:张三}>
