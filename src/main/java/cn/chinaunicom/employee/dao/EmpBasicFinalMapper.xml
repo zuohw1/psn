@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chinaunicom.employee.dao.EmpBasicFinalMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chinaunicom.employee.entity.EmpBasicFinal">
+        <id column="final_id" property="finalId" />
+        <result column="person_id" property="personId" />
+        <result column="org_id" property="orgId" />
+        <result column="person_type_id" property="personTypeId" />
+        <result column="effective_start_date" property="effectiveStartDate" />
+        <result column="effective_end_date" property="effectiveEndDate" />
+        <result column="employee_number" property="employeeNumber" />
+        <result column="full_name" property="fullName" />
+        <result column="previous_name" property="previousName" />
+        <result column="sex" property="sex" />
+        <result column="date_of_birth" property="dateOfBirth" />
+        <result column="nationality" property="nationality" />
+        <result column="nation" property="nation" />
+        <result column="province" property="province" />
+        <result column="town_of_birth" property="townOfBirth" />
+        <result column="region_of_birth" property="regionOfBirth" />
+        <result column="household_register_place" property="householdRegisterPlace" />
+        <result column="household_register_type" property="householdRegisterType" />
+        <result column="user_person_type" property="userPersonType" />
+        <result column="national_identifier" property="nationalIdentifier" />
+        <result column="state_of_health" property="stateOfHealth" />
+        <result column="specialties" property="specialties" />
+        <result column="hobbies" property="hobbies" />
+        <result column="marital_status" property="maritalStatus" />
+        <result column="email_address" property="emailAddress" />
+        <result column="english_name" property="englishName" />
+        <result column="name_of_letters" property="nameOfLetters" />
+        <result column="quick_access_code" property="quickAccessCode" />
+        <result column="blood_type" property="bloodType" />
+        <result column="disability_flag" property="disabilityFlag" />
+        <result column="immigrated_foreign_flag" property="immigratedForeignFlag" />
+        <result column="plan_of_retirement_date" property="planOfRetirementDate" />
+        <result column="other_user_person_type" property="otherUserPersonType" />
+        <result column="initial_job_start_date" property="initialJobStartDate" />
+        <result column="working_ages_start_date" property="workingAgesStartDate" />
+        <result column="interval_working_ages_month" property="intervalWorkingAgesMonth" />
+        <result column="initial_job_type" property="initialJobType" />
+        <result column="join_cuc_date" property="joinCucDate" />
+        <result column="join_cuc_channel" property="joinCucChannel" />
+        <result column="join_cuc_other_channel" property="joinCucOtherChannel" />
+        <result column="staff_sort_num" property="staffSortNum" />
+        <result column="employee_number_old" property="employeeNumberOld" />
+        <result column="ufida_system_number" property="ufidaSystemNumber" />
+        <result column="ufida_system_join_channel" property="ufidaSystemJoinChannel" />
+        <result column="join_office_date" property="joinOfficeDate" />
+        <result column="add_staff_date" property="addStaffDate" />
+        <result column="add_staff_type" property="addStaffType" />
+        <result column="add_staff_comments" property="addStaffComments" />
+        <result column="social_security_num" property="socialSecurityNum" />
+        <result column="create_by" property="createBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="attribute1" property="attribute1" />
+        <result column="attribute2" property="attribute2" />
+        <result column="attribute3" property="attribute3" />
+        <result column="attribute4" property="attribute4" />
+        <result column="attribute5" property="attribute5" />
+        <result column="attribute6" property="attribute6" />
+        <result column="attribute7" property="attribute7" />
+        <result column="attribute8" property="attribute8" />
+        <result column="attribute9" property="attribute9" />
+        <result column="attribute10" property="attribute10" />
+        <result column="operate_type" property="operateType" />
+        <result column="operate_order" property="operateOrder" />
+        <result column="synchronization_state" property="synchronizationState" />
+        <result column="synchronization_end_date" property="synchronizationEndDate" />
+        <result column="line_number" property="lineNumber" />
+        <result column="synchronization_log" property="synchronizationLog" />
+        <result column="job_id" property="jobId" />
+        <result column="grade_id" property="gradeId" />
+        <result column="operate_state" property="operateState" />
+        <result column="is_realtime" property="isRealtime" />
+        <result column="effective_update_start_date" property="effectiveUpdateStartDate" />
+        <result column="join_cuc_channel_new" property="joinCucChannelNew" />
+        <result column="join_cuc_other_channel_new" property="joinCucOtherChannelNew" />
+        <result column="join_cuc_channel_mark_new" property="joinCucChannelMarkNew" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        final_id, person_id, org_id, person_type_id, effective_start_date, effective_end_date, employee_number, full_name, previous_name, sex, date_of_birth, nationality, nation, province, town_of_birth, region_of_birth, household_register_place, household_register_type, user_person_type, national_identifier, state_of_health, specialties, hobbies, marital_status, email_address, english_name, name_of_letters, quick_access_code, blood_type, disability_flag, immigrated_foreign_flag, plan_of_retirement_date, other_user_person_type, initial_job_start_date, working_ages_start_date, interval_working_ages_month, initial_job_type, join_cuc_date, join_cuc_channel, join_cuc_other_channel, staff_sort_num, employee_number_old, ufida_system_number, ufida_system_join_channel, join_office_date, add_staff_date, add_staff_type, add_staff_comments, social_security_num, create_by, create_date, update_by, update_date, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7, attribute8, attribute9, attribute10, operate_type, operate_order, synchronization_state, synchronization_end_date, line_number, synchronization_log, job_id, grade_id, operate_state, is_realtime, effective_update_start_date, join_cuc_channel_new, join_cuc_other_channel_new, join_cuc_channel_mark_new
+    </sql>
+</mapper>

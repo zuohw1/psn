@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import cn.chinaunicom.employee.entity.AssignmentsInfo;
 import cn.chinaunicom.employee.entity.EmpBasic;
+import cn.chinaunicom.employee.entity.EmpBasicDetail;
 import cn.chinaunicom.platform.dao.HrBaseMapper;
 
 /**
@@ -30,6 +31,13 @@ public interface EmpMgrMapper extends HrBaseMapper<EmpBasic> {
 	 * @return
 	 */
 	Map<String,Object> queryPsnBasicInfoById(Map<String,Object> params);
+	
+	/**
+	 * 根据员工Id获取基本信息
+	 * @param params
+	 * @return
+	 */
+	EmpBasicDetail queryPsnBasicDetailById(Map<String,Object> params);
 	/**
 	 * 根据员工Id获取手机号
 	 * @param params
@@ -120,6 +128,27 @@ public interface EmpMgrMapper extends HrBaseMapper<EmpBasic> {
 	 * @return
 	 */
 	Map<String,Long> queryOrgListByNameCount(Map<String,Object> params);
+	
+	/**
+	 * 员工信息维护，更新
+	 * @param params
+	 * @return
+	 */
+	Integer updateEmpBaisciInfoById(EmpBasicDetail params) ;
+	
+	/**
+	 * 员工信息维护，更新基本信息EBS同步状态
+	 * @param params
+	 * @return
+	 */
+	Integer updateBasicSynchronizationState(Map<String,Object> params) ;
+
+	/**
+	 * 员工信息维护，更新分配信息EBS同步状态
+	 * @param paramMap
+	 */
+	Integer updateAssignmentsAllSynchronizationState(Map<String, Object> paramMap);
+	
 	
 	
 

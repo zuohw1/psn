@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import cn.chinaunicom.employee.entity.AssignmentsInfo;
 import cn.chinaunicom.employee.entity.EmpBasic;
 import cn.chinaunicom.employee.entity.EmpBasicDTO;
+import cn.chinaunicom.employee.entity.EmpBasicDetail;
 import cn.chinaunicom.platform.service.IHrService;
 
 /**
@@ -24,7 +25,7 @@ public interface EmpMgrService extends IHrService<EmpBasic> {
 	
 	public Integer saveEmpBasic(EmpBasic entity);
 	
-	public Integer updateEmpBasic(EmpBasic entity);
+	public Integer updateEmpBasic(EmpBasicDetail entity);
 	
 	public Integer deleteEmpBasic(Long id);
 	
@@ -46,6 +47,13 @@ public interface EmpMgrService extends IHrService<EmpBasic> {
 	 * @return
 	 */
 	public List<EmpBasicDTO> queryPsnBasicInfoById(Long personId);
+	
+	/**
+	 * 根据人员Id查询修改前信息
+	 * @param personId
+	 * @return
+	 */
+	public EmpBasicDetail queryPsnBasicDetailById(Long personId);
 	
 	/**
 	 * 根据员工Id获取手机号

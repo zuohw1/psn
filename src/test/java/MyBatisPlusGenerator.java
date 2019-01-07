@@ -64,10 +64,10 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
  */
 public class MyBatisPlusGenerator {
 
-    private static String packageName="platform";    //文件路径
+    private static String packageName="empassignments";    //文件路径
     private static String authorName="zhanggang";     //作者
-    private static String table="pub_billtemplet_b";                  //table名字
-    private static String prefix="pub_";                     //table前缀
+    private static String[] tables=new String[]{"ehrbase_assignments_all_f","ehrbase_assignments_all_t"};                  //table名字
+    private static String prefix="ehrbase_";                     //table前缀
     private static File file = new File("");
     private static String path = file.getAbsolutePath();
     private static String DB_URL = "jdbc:mysql://127.0.0.1:3306/cu-hr2.0?characterEncoding=utf8";
@@ -120,7 +120,7 @@ public class MyBatisPlusGenerator {
                         //.setDbColumnUnderline(true)//全局下划线命名
                         .setTablePrefix(new String[]{prefix})// 此处可以修改为您的表前缀
                         .setNaming(NamingStrategy.underline_to_camel)// 表名生成策略
-                        .setInclude(new String[] { table }) // 需要生成的表
+                        .setInclude(tables) // 需要生成的表
                         .setRestControllerStyle(true)
                         //.setExclude(new String[]{"test"}) // 排除生成的表
                         // 自定义实体父类
@@ -177,7 +177,7 @@ public class MyBatisPlusGenerator {
                 }))
         ).setTemplate(
                 // 关闭默认 xml 生成，调整生成 至 根目录
-                new TemplateConfig().setXml(null)
+                new TemplateConfig().setXml(null).setController(null).setService(null).setServiceImpl(null)
                 // 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template 使用 copy
                 // 至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
                 // .setController("...");

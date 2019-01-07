@@ -1,6 +1,5 @@
 package cn.chinaunicom.employee.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -12,105 +11,50 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 员工基本信息Entity
+ * 
  * </p>
  *
  * @author zhanggang
- * @since 2018-11-06
+ * @since 2019-01-04
  */
-@TableName("ehrbase_emp_basic")
+@TableName("ehrbase_emp_basic_final")
 @ApiModel("")
-public class EmpBasic extends Model<EmpBasic> {
+public class EmpBasicFinal extends Model<EmpBasicFinal> {
 
     private static final long serialVersionUID = 1L;
-    /**
-     * 主键
-     */
-    @TableId("person_id")
+
+    @TableId("final_id")
+    private Long finalId;
+    @TableField("person_id")
     private Long personId;
-    /**
-     * 所属组织id
-     */
     @TableField("org_id")
     private Long orgId;
-    /**
-     * 人员类型Id
-     */
     @TableField("person_type_id")
-    private BigDecimal personTypeId;
-    /**
-     * 职务Id
-     */
-    @TableField("job_id")
-    private BigDecimal jobId;
-    
-    @TableField("grade_id")
-    private BigDecimal gradeId;
-    
+    private Long personTypeId;
     @TableField("effective_start_date")
     private Date effectiveStartDate;
-    
     @TableField("effective_end_date")
     private Date effectiveEndDate;
-    /**
-     * 员工编号
-     */
     @TableField("employee_number")
     private String employeeNumber;
-    /**
-     * 姓名
-     */
     @TableField("full_name")
     private String fullName;
-    /**
-     * 曾用名
-     */
     @TableField("previous_name")
     private String previousName;
-    /**
-     * 性别
-     * lookup_type = 'SEX'
-     */
     private String sex;
-    
-    /**
-     * 出生日期
-     */
     @TableField("date_of_birth")
     private Date dateOfBirth;
-    /**
-     * 国籍
-     */
     private String nationality;
-    /**
-     * 民族
-     * lookup_type = 'CN_RACE'   hades_lookups 
-     */
     private String nation;
-    /**
-     * 户籍省份
-     */
     private String province;
-    /**
-     * 籍贯
-     */
     @TableField("town_of_birth")
     private String townOfBirth;
-    /**
-     * 出生地
-     */
     @TableField("region_of_birth")
     private String regionOfBirth;
-    /**
-     * 户口所在地
-     */
     @TableField("household_register_place")
     private String householdRegisterPlace;
     @TableField("household_register_type")
     private String householdRegisterType;
-    /**
-     * 用工类型
-     */
     @TableField("user_person_type")
     private String userPersonType;
     @TableField("national_identifier")
@@ -172,11 +116,11 @@ public class EmpBasic extends Model<EmpBasic> {
     @TableField("social_security_num")
     private String socialSecurityNum;
     @TableField("create_by")
-    private BigDecimal createBy;
+    private Long createBy;
     @TableField("create_date")
     private Date createDate;
     @TableField("update_by")
-    private BigDecimal updateBy;
+    private Long updateBy;
     @TableField("update_date")
     private Date updateDate;
     private String attribute1;
@@ -189,44 +133,43 @@ public class EmpBasic extends Model<EmpBasic> {
     private String attribute8;
     private String attribute9;
     private String attribute10;
+    @TableField("operate_type")
+    private String operateType;
+    @TableField("operate_order")
+    private String operateOrder;
     @TableField("synchronization_state")
     private String synchronizationState;
+    @TableField("synchronization_end_date")
+    private Date synchronizationEndDate;
+    @TableField("line_number")
+    private String lineNumber;
+    @TableField("synchronization_log")
+    private String synchronizationLog;
+    @TableField("job_id")
+    private Long jobId;
+    @TableField("grade_id")
+    private Long gradeId;
+    @TableField("operate_state")
+    private String operateState;
+    @TableField("is_realtime")
+    private String isRealtime;
+    @TableField("effective_update_start_date")
+    private Date effectiveUpdateStartDate;
     @TableField("join_cuc_channel_new")
     private String joinCucChannelNew;
     @TableField("join_cuc_other_channel_new")
     private String joinCucOtherChannelNew;
     @TableField("join_cuc_channel_mark_new")
     private String joinCucChannelMarkNew;
-    /**
-     * 政治面貌(档案编码) 
-     * hades_lookups  lookup_type = 'CN_PARTY_TYPE'
-     */
-    @TableField("politics_landscape_name")
-    private String politicsLandscapeName;
-    @TableField("education_experience")
-    private String educationExperience;
-    private String degree;
-    @TableField("staff_category")
-    private String staffCategory;
-    @TableField("assignment_category")
-    private String assignmentCategory;
-    @TableField("job_name")
-    private String jobName;
-    @TableField("qualification_level")
-    private String qualificationLevel;
-    @TableField("grade_name")
-    private String gradeName;
-    @TableField("people_group")
-    private String peopleGroup;
-    @TableField("pay_regulation")
-    private String payRegulation;
-    @TableField("email_name")
-    private String emailName;
-    @TableField("alias_name")
-    private String aliasName;
-    @TableField("join_telecom_date")
-    private String joinTelecomDate;
 
+
+    public Long getFinalId() {
+        return finalId;
+    }
+
+    public void setFinalId(Long finalId) {
+        this.finalId = finalId;
+    }
 
     public Long getPersonId() {
         return personId;
@@ -244,28 +187,12 @@ public class EmpBasic extends Model<EmpBasic> {
         this.orgId = orgId;
     }
 
-    public BigDecimal getPersonTypeId() {
+    public Long getPersonTypeId() {
         return personTypeId;
     }
 
-    public void setPersonTypeId(BigDecimal personTypeId) {
+    public void setPersonTypeId(Long personTypeId) {
         this.personTypeId = personTypeId;
-    }
-
-    public BigDecimal getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(BigDecimal jobId) {
-        this.jobId = jobId;
-    }
-
-    public BigDecimal getGradeId() {
-        return gradeId;
-    }
-
-    public void setGradeId(BigDecimal gradeId) {
-        this.gradeId = gradeId;
     }
 
     public Date getEffectiveStartDate() {
@@ -628,11 +555,11 @@ public class EmpBasic extends Model<EmpBasic> {
         this.socialSecurityNum = socialSecurityNum;
     }
 
-    public BigDecimal getCreateBy() {
+    public Long getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(BigDecimal createBy) {
+    public void setCreateBy(Long createBy) {
         this.createBy = createBy;
     }
 
@@ -644,11 +571,11 @@ public class EmpBasic extends Model<EmpBasic> {
         this.createDate = createDate;
     }
 
-    public BigDecimal getUpdateBy() {
+    public Long getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(BigDecimal updateBy) {
+    public void setUpdateBy(Long updateBy) {
         this.updateBy = updateBy;
     }
 
@@ -740,12 +667,92 @@ public class EmpBasic extends Model<EmpBasic> {
         this.attribute10 = attribute10;
     }
 
+    public String getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(String operateType) {
+        this.operateType = operateType;
+    }
+
+    public String getOperateOrder() {
+        return operateOrder;
+    }
+
+    public void setOperateOrder(String operateOrder) {
+        this.operateOrder = operateOrder;
+    }
+
     public String getSynchronizationState() {
         return synchronizationState;
     }
 
     public void setSynchronizationState(String synchronizationState) {
         this.synchronizationState = synchronizationState;
+    }
+
+    public Date getSynchronizationEndDate() {
+        return synchronizationEndDate;
+    }
+
+    public void setSynchronizationEndDate(Date synchronizationEndDate) {
+        this.synchronizationEndDate = synchronizationEndDate;
+    }
+
+    public String getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(String lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
+    public String getSynchronizationLog() {
+        return synchronizationLog;
+    }
+
+    public void setSynchronizationLog(String synchronizationLog) {
+        this.synchronizationLog = synchronizationLog;
+    }
+
+    public Long getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Long jobId) {
+        this.jobId = jobId;
+    }
+
+    public Long getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(Long gradeId) {
+        this.gradeId = gradeId;
+    }
+
+    public String getOperateState() {
+        return operateState;
+    }
+
+    public void setOperateState(String operateState) {
+        this.operateState = operateState;
+    }
+
+    public String getIsRealtime() {
+        return isRealtime;
+    }
+
+    public void setIsRealtime(String isRealtime) {
+        this.isRealtime = isRealtime;
+    }
+
+    public Date getEffectiveUpdateStartDate() {
+        return effectiveUpdateStartDate;
+    }
+
+    public void setEffectiveUpdateStartDate(Date effectiveUpdateStartDate) {
+        this.effectiveUpdateStartDate = effectiveUpdateStartDate;
     }
 
     public String getJoinCucChannelNew() {
@@ -772,123 +779,18 @@ public class EmpBasic extends Model<EmpBasic> {
         this.joinCucChannelMarkNew = joinCucChannelMarkNew;
     }
 
-    public String getPoliticsLandscapeName() {
-        return politicsLandscapeName;
-    }
-
-    public void setPoliticsLandscapeName(String politicsLandscapeName) {
-        this.politicsLandscapeName = politicsLandscapeName;
-    }
-
-    public String getEducationExperience() {
-        return educationExperience;
-    }
-
-    public void setEducationExperience(String educationExperience) {
-        this.educationExperience = educationExperience;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public String getStaffCategory() {
-        return staffCategory;
-    }
-
-    public void setStaffCategory(String staffCategory) {
-        this.staffCategory = staffCategory;
-    }
-
-    public String getAssignmentCategory() {
-        return assignmentCategory;
-    }
-
-    public void setAssignmentCategory(String assignmentCategory) {
-        this.assignmentCategory = assignmentCategory;
-    }
-
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    public String getQualificationLevel() {
-        return qualificationLevel;
-    }
-
-    public void setQualificationLevel(String qualificationLevel) {
-        this.qualificationLevel = qualificationLevel;
-    }
-
-    public String getGradeName() {
-        return gradeName;
-    }
-
-    public void setGradeName(String gradeName) {
-        this.gradeName = gradeName;
-    }
-
-    public String getPeopleGroup() {
-        return peopleGroup;
-    }
-
-    public void setPeopleGroup(String peopleGroup) {
-        this.peopleGroup = peopleGroup;
-    }
-
-    public String getPayRegulation() {
-        return payRegulation;
-    }
-
-    public void setPayRegulation(String payRegulation) {
-        this.payRegulation = payRegulation;
-    }
-
-    public String getEmailName() {
-        return emailName;
-    }
-
-    public void setEmailName(String emailName) {
-        this.emailName = emailName;
-    }
-
-    public String getAliasName() {
-        return aliasName;
-    }
-
-    public void setAliasName(String aliasName) {
-        this.aliasName = aliasName;
-    }
-
-    public String getJoinTelecomDate() {
-        return joinTelecomDate;
-    }
-
-    public void setJoinTelecomDate(String joinTelecomDate) {
-        this.joinTelecomDate = joinTelecomDate;
-    }
-
     @Override
     protected Serializable pkVal() {
-        return this.personId;
+        return this.finalId;
     }
 
     @Override
     public String toString() {
-        return "EmpBasic{" +
+        return "EmpBasicFinal{" +
+        ", finalId=" + finalId +
         ", personId=" + personId +
         ", orgId=" + orgId +
         ", personTypeId=" + personTypeId +
-        ", jobId=" + jobId +
-        ", gradeId=" + gradeId +
         ", effectiveStartDate=" + effectiveStartDate +
         ", effectiveEndDate=" + effectiveEndDate +
         ", employeeNumber=" + employeeNumber +
@@ -948,23 +850,20 @@ public class EmpBasic extends Model<EmpBasic> {
         ", attribute8=" + attribute8 +
         ", attribute9=" + attribute9 +
         ", attribute10=" + attribute10 +
+        ", operateType=" + operateType +
+        ", operateOrder=" + operateOrder +
         ", synchronizationState=" + synchronizationState +
+        ", synchronizationEndDate=" + synchronizationEndDate +
+        ", lineNumber=" + lineNumber +
+        ", synchronizationLog=" + synchronizationLog +
+        ", jobId=" + jobId +
+        ", gradeId=" + gradeId +
+        ", operateState=" + operateState +
+        ", isRealtime=" + isRealtime +
+        ", effectiveUpdateStartDate=" + effectiveUpdateStartDate +
         ", joinCucChannelNew=" + joinCucChannelNew +
         ", joinCucOtherChannelNew=" + joinCucOtherChannelNew +
         ", joinCucChannelMarkNew=" + joinCucChannelMarkNew +
-        ", politicsLandscapeName=" + politicsLandscapeName +
-        ", educationExperience=" + educationExperience +
-        ", degree=" + degree +
-        ", staffCategory=" + staffCategory +
-        ", assignmentCategory=" + assignmentCategory +
-        ", jobName=" + jobName +
-        ", qualificationLevel=" + qualificationLevel +
-        ", gradeName=" + gradeName +
-        ", peopleGroup=" + peopleGroup +
-        ", payRegulation=" + payRegulation +
-        ", emailName=" + emailName +
-        ", aliasName=" + aliasName +
-        ", joinTelecomDate=" + joinTelecomDate +
         "}";
     }
 }

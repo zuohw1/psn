@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chinaunicom.empassignments.dao.AssignmentsAllTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chinaunicom.empassignments.entity.AssignmentsAllT">
+        <id column="temp_id" property="tempId" />
+        <result column="assignment_id" property="assignmentId" />
+        <result column="person_id" property="personId" />
+        <result column="organization_id" property="organizationId" />
+        <result column="position_id" property="positionId" />
+        <result column="job_id" property="jobId" />
+        <result column="source_organization_id" property="sourceOrganizationId" />
+        <result column="effective_start_date" property="effectiveStartDate" />
+        <result column="effective_end_date" property="effectiveEndDate" />
+        <result column="grade_id" property="gradeId" />
+        <result column="primary_flag" property="primaryFlag" />
+        <result column="assignment_sequence" property="assignmentSequence" />
+        <result column="assignment_bigint" property="assignmentBigint" />
+        <result column="staff_post_name" property="staffPostName" />
+        <result column="payroll" property="payroll" />
+        <result column="assignment_type" property="assignmentType" />
+        <result column="assignment_category" property="assignmentCategory" />
+        <result column="staff_category" property="staffCategory" />
+        <result column="leader_id" property="leaderId" />
+        <result column="leader_num" property="leaderNum" />
+        <result column="employer_name" property="employerName" />
+        <result column="tax_place" property="taxPlace" />
+        <result column="pay_of_social_security_place" property="payOfSocialSecurityPlace" />
+        <result column="create_by" property="createBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="attribute1" property="attribute1" />
+        <result column="attribute2" property="attribute2" />
+        <result column="attribute3" property="attribute3" />
+        <result column="attribute4" property="attribute4" />
+        <result column="attribute5" property="attribute5" />
+        <result column="attribute6" property="attribute6" />
+        <result column="attribute7" property="attribute7" />
+        <result column="attribute8" property="attribute8" />
+        <result column="attribute9" property="attribute9" />
+        <result column="attribute10" property="attribute10" />
+        <result column="operate_type" property="operateType" />
+        <result column="operate_order" property="operateOrder" />
+        <result column="is_realtime" property="isRealtime" />
+        <result column="operate_state" property="operateState" />
+        <result column="effective_update_start_date" property="effectiveUpdateStartDate" />
+        <result column="business_type" property="businessType" />
+        <result column="synchronization_state" property="synchronizationState" />
+        <result column="cuc_org_min_cost" property="cucOrgMinCost" />
+        <result column="cuc_org_min_per_type" property="cucOrgMinPerType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        assignment_id, person_id, organization_id, position_id, job_id, source_organization_id, effective_start_date, effective_end_date, grade_id, primary_flag, assignment_sequence, assignment_bigint, staff_post_name, payroll, assignment_type, assignment_category, staff_category, leader_id, leader_num, employer_name, tax_place, pay_of_social_security_place, create_by, create_date, update_by, update_date, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7, attribute8, attribute9, attribute10, operate_type, operate_order, is_realtime, operate_state, effective_update_start_date, business_type, temp_id, synchronization_state, cuc_org_min_cost, cuc_org_min_per_type
+    </sql>
+
+</mapper>

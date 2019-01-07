@@ -21,9 +21,10 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import cn.chinaunicom.employee.entity.EmpBasic;
 import cn.chinaunicom.employee.entity.EmpBasicDTO;
+import cn.chinaunicom.employee.entity.EmpBasicDetail;
 import cn.chinaunicom.employee.service.EmpMgrService;
 import cn.chinaunicom.platform.entity.BilltempletB;
-import cn.chinaunicom.platform.service.BilltempletBService;
+import cn.chinaunicom.platform.service.IBilltempletBService;
 import cn.chinaunicom.platform.utils.MessageResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,7 +42,7 @@ import io.swagger.annotations.ApiResponses;
  * @version V1.0
  * **************************************
  */
-@Api(value = "", tags = "")
+@Api(value = "员工信息维护", tags = "员工信息维护")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/empMgr")
@@ -51,7 +52,7 @@ public class EmpMgrController {
 	EmpMgrService service;
 	
 	@Autowired
-	BilltempletBService billtempletBService ;
+	IBilltempletBService billtempletBService ;
 	
 	
 	@ApiOperation(value = "花名册列表", notes = "花名册列表", response = EmpBasic.class, httpMethod = "GET")
@@ -172,6 +173,41 @@ public class EmpMgrController {
 	
         if(personList!=null ) {
         	return new ResponseEntity<>(personList, HttpStatus.OK);
+        }else {
+        	MessageResponse dto = new MessageResponse();
+        	String msg = "未查询到人员数据";
+            dto.setMsg(msg);
+            return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
+        }
+      
+      
+    }
+	
+	
+	@ApiOperation(value = "根据人员Id获取修改前信息", notes = "根据人员Id获取修改前信息", response = List.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "personId", value = "员工Id", required = true, dataType = "Long"),
+    })
+    @ApiResponses({
+            @ApiResponse(
+                    code = 200,
+                    message = "获取人员数据成功",
+                    response = Page.class
+            ),
+            @ApiResponse(
+                    code = 404,
+                    message = "未查询到人员数据"
+            )
+    })
+	@GetMapping("/queryPsnBasicDetailById")
+    public ResponseEntity<Object> queryPsnBasicDetailById(
+            @RequestParam(value = "personId", required = true) Long personId)
+	{
+		EmpBasicDetail empBasicDetail = service.queryPsnBasicDetailById(personId);
+		
+	
+        if(empBasicDetail!=null ) {
+        	return new ResponseEntity<>(empBasicDetail, HttpStatus.OK);
         }else {
         	MessageResponse dto = new MessageResponse();
         	String msg = "未查询到人员数据";
@@ -310,6 +346,40 @@ public class EmpMgrController {
       
     }
 	
+	@ApiOperation(value = "根据模板编码获取档案数据", notes = "根据模板编码获取档案数据", response = List.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "billTypeCode", value = "模板编码", required = true, dataType = "String"),
+    })
+    @ApiResponses({
+            @ApiResponse(
+                    code = 200,
+                    message = "获取档案数据成功",
+                    response = Page.class
+            ),
+            @ApiResponse(
+                    code = 404,
+                    message = "未查询到档案数据"
+            )
+    })
+	@GetMapping("/queryRefSelectDataByBillType")
+    public ResponseEntity<Object> queryRefSelectDataByBillType(
+            @RequestParam(value = "billTypeCode", required = true) String billTypeCode)
+	{
+		//EmpBasicDetail empBasicDetail = service.queryPsnBasicDetailById(personId);
+		
+		Map<String, List<Map<String, String>>> refSelectData= billtempletBService.queryRefSelectDataByBillTypeCode(billTypeCode);
+        if(refSelectData!=null ) {
+        	return new ResponseEntity<>(refSelectData, HttpStatus.OK);
+        }else {
+        	MessageResponse dto = new MessageResponse();
+        	String msg = "未查询到档案数据";
+            dto.setMsg(msg);
+            return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
+        }
+      
+      
+    }
+	
 	@ApiOperation(value = "保存", notes = "保存", response = MessageResponse.class, httpMethod = "POST")
 	@ApiImplicitParams({
     @ApiImplicitParam(name = "x-token-code", value = "用户登录令牌", paramType = "header", dataType = "String", required = true, defaultValue = "xjMjL0m2A6d1mOIsb9uFk+wuBIcKxrg4")
@@ -343,7 +413,7 @@ public class EmpMgrController {
 	         )
 	})
 	@PostMapping("/update")
-	public ResponseEntity<Object> updateEmpBasic(@RequestBody EmpBasic entity){
+	public ResponseEntity<Object> updateEmpBasic(@RequestBody EmpBasicDetail entity){
 		MessageResponse vo = new MessageResponse();
         Integer i = service.updateEmpBasic(entity);
         if(i>0) {

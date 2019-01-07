@@ -64,5 +64,29 @@
 		ORDER BY
 			showorder
     </select>
+    
+    
+    <select id = "queryRefSelectDataByBillTypeCode" resultType = "cn.chinaunicom.defdoc.entity.HadesLookups">
+	    SELECT DISTINCT
+			meaning,
+			lookup_code,
+			lookup_type 
+		FROM
+			hades_lookups 
+		WHERE
+			lookup_type IN (
+		SELECT
+			select_type selectType 
+		FROM
+			pub_billtemplet_b 
+		WHERE
+			pk_billtemplet = ( SELECT pk_billtemplet FROM pub_billtemplet WHERE pk_billtypecode = #{billTypeCode} ) 
+			AND item_type = 'Select' 
+			AND select_type IS NOT NULL 
+			) 
+			AND enabled_flag = 'Y' 
+		ORDER BY
+			lookup_type
+    </select>
 
 </mapper>

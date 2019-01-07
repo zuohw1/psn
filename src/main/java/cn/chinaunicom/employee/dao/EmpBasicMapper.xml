@@ -165,11 +165,11 @@
 		WHERE
 			1 = 1 
 		<if test="employeeNumber != null and employeeNumber != ''">
-            AND t1.employee_number like concat(concat('%',#{employeeNumber}),'%')
+            AND t1.employee_number like concat(#{employeeNumber},'%')
         </if>
         
 		<if test="fullName != null and fullName != ''">
-            AND t1.full_name like concat(concat('%',#{ fullName }),'%') 
+            AND t1.full_name like concat(#{ fullName },'%') 
         </if>
 		<if test="org_id != null and org_id != ''">
             AND t1.org_id = #{ org_id }

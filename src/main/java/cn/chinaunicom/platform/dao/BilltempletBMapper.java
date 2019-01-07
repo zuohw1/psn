@@ -5,6 +5,7 @@ import cn.chinaunicom.platform.entity.BilltempletB;
 import java.util.List;
 import java.util.Map;
 
+import cn.chinaunicom.defdoc.entity.HadesLookups;
 import cn.chinaunicom.platform.dao.HrBaseMapper;
 
 /**
@@ -19,5 +20,7 @@ public interface BilltempletBMapper extends HrBaseMapper<BilltempletB> {
 	
 	
 	List<BilltempletB> queryBillTemplateBListByParentId(Map<String,Object> params) ;
+	
+	List<HadesLookups> queryRefSelectDataByBillTypeCode(Map<String,Object> params) ;
 
 }

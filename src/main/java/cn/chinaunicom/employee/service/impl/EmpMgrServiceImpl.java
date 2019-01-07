@@ -5,18 +5,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 
-import cn.chinaunicom.employee.dao.EmpBasicMapper;
+import cn.chinaunicom.empassignments.dao.AssignmentsAllFMapper;
+import cn.chinaunicom.empassignments.dao.AssignmentsAllTMapper;
+import cn.chinaunicom.empassignments.entity.AssignmentsAllF;
+import cn.chinaunicom.empassignments.entity.AssignmentsAllT;
+import cn.chinaunicom.employee.dao.EmpBasicFinalMapper;
+import cn.chinaunicom.employee.dao.EmpBasicTempMapper;
 import cn.chinaunicom.employee.dao.EmpMgrMapper;
 import cn.chinaunicom.employee.entity.AssignmentsInfo;
 import cn.chinaunicom.employee.entity.EmpBasic;
 import cn.chinaunicom.employee.entity.EmpBasicDTO;
+import cn.chinaunicom.employee.entity.EmpBasicDetail;
+import cn.chinaunicom.employee.entity.EmpBasicFinal;
+import cn.chinaunicom.employee.entity.EmpBasicTemp;
 import cn.chinaunicom.employee.service.EmpMgrService;
 import cn.chinaunicom.platform.service.impl.HrServiceImpl;
 
@@ -33,6 +44,18 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 
 	@Autowired
 	EmpMgrMapper mapper;
+	
+	@Autowired
+	EmpBasicTempMapper basicTempMapper;
+	
+	@Autowired
+	EmpBasicFinalMapper basicFinalMapper;
+	
+	@Autowired
+	AssignmentsAllTMapper assignmentsTempMapper;
+	
+	@Autowired
+	AssignmentsAllFMapper assignmentsFinalMapper;
 	
 	@Override
 	public Page<EmpBasic> getEmpBasicList(Integer pageNumber,Integer pageSize,String fullName,String employeeNumber,String org_id,String userPersonType) {
@@ -61,10 +84,214 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 		return mapper.insert(entity);
 	}
 	
+	/**
+	 * 1. 员工基本信息提交逻辑:
+	 *  情况1(走流程)：
+	 * 	a.在ehrbase_emp_basic_temp 表中插入修改前后的数据(两条记录)
+	 *  b.在ehrbase_assignments_all_t 表中插入修改前后数据
+	 *  c.更新ehrbase_emp_basic 的同步状态
+	 *  d.更新ehrbase_assignments_all的同步状态
+	 * 情况2(不走流程,啥时候不走流程暂不确定)
+	 *  a.在ehrbase_emp_basic_final 表中插入修改前后的数据(两条记录)
+	 *  b.在ehrbase_assignments_all_f 表中插入修改前后数据
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public Integer updateEmpBasic(EmpBasic entity) {
-		return mapper.updateById(entity);
+	public Integer updateEmpBasic(EmpBasicDetail entity) {
+		
+		EmpBasicDetail newInfo = entity;
+		Long personId = newInfo.getPersonId();
+		//1.查询原始数据
+		EmpBasic oldInfo = this.mapper.selectById(personId);
+		
+		if("corrections".equals(newInfo.getOpt())) {
+			
+			
+			basicFinalMapper.insert(copyNewBasicInfoPropertiesToFinal(entity));
+			
+			Map<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("personId", newInfo.getPersonId());
+			AssignmentsInfo assignmentsInfo = this.mapper.queryPsnAssignmentsById(paramMap);
+			
+			assignmentsFinalMapper.insert(copyNewAssignmentsAllPropertiesToFinal(assignmentsInfo,entity));
+			
+		}else if("update".equals(newInfo.getOpt())) {
+			/**
+			 * 1. 处理基本信息
+			 */
+			//插入原始数据
+			basicTempMapper.insert(copyOldBasicInfoProperties(oldInfo));
+			//插入新数据
+			basicTempMapper.insert(copyNewBasicInfoProperties(newInfo));
+			//更新同步状态
+			Map<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("synchronizationState", "2");
+			paramMap.put("personId",newInfo.getPersonId());
+			this.mapper.updateBasicSynchronizationState(paramMap);
+			/**
+			 * 2.处理分配信息
+			 */
+			//1. 按人员先查询分配信息
+			paramMap.clear();
+			paramMap.put("personId", newInfo.getPersonId());
+			AssignmentsInfo assignmentsInfo = this.mapper.queryPsnAssignmentsById(paramMap);
+
+			assignmentsTempMapper.insert(copyOldAssignmentsAllProperties(assignmentsInfo));
+			assignmentsTempMapper.insert(copyNewAssignmentsAllProperties(assignmentsInfo,entity));
+			paramMap.clear();
+			paramMap.put("synchronizationState", "2");
+			paramMap.put("assignmentId",assignmentsInfo.getAssignmentId());
+			this.mapper.updateAssignmentsAllSynchronizationState(paramMap);
+			
+			/**
+			 * 3.发送邮件或短信通知(待实现)
+			 */
+			
+			
+		}
+		
+		
+		
+		return 0 ; 
 	}
+	
+	
+	
+	public AssignmentsAllT copyOldAssignmentsAllProperties(AssignmentsInfo oldInfo) {
+		
+		AssignmentsAllT temp = new AssignmentsAllT();
+		BeanUtils.copyProperties(oldInfo, temp, new String[] {"attribute1",
+				"attribute2",
+				"attribute3",
+				"attribute4",
+				"attribute5",
+				"attribute6",
+				"attribute7",
+				"attribute8",
+				"attribute9",
+				"attribute10"});
+		temp.setOperateOrder("01old");
+		return temp;
+	}
+	
+	public AssignmentsAllF copyNewAssignmentsAllPropertiesToFinal(AssignmentsInfo newInfo,EmpBasicDetail basicInfo) {
+			
+			AssignmentsAllF temp = new AssignmentsAllF();
+			BeanUtils.copyProperties(newInfo, temp, new String[] {"attribute1",
+					"attribute2",
+					"attribute3",
+					"attribute4",
+					"attribute5",
+					"attribute6",
+					"attribute7",
+					"attribute8",
+					"attribute9",
+					"attribute10"});
+			temp.setCucOrgMinCost(basicInfo.getCucOrgMinCost());
+			temp.setCucOrgMinPerType(basicInfo.getCucOrgMinPerType());
+			temp.setOperateType("UPDATE");
+			temp.setIsRealtime("Y");
+			return temp;
+		}
+	
+	public AssignmentsAllT copyNewAssignmentsAllProperties(AssignmentsInfo oldInfo,EmpBasicDetail basicInfo) {
+		
+		AssignmentsAllT temp = new AssignmentsAllT();
+		BeanUtils.copyProperties(oldInfo, temp, new String[] {"attribute1",
+				"attribute2",
+				"attribute3",
+				"attribute4",
+				"attribute5",
+				"attribute6",
+				"attribute7",
+				"attribute8",
+				"attribute9",
+				"attribute10"});
+		temp.setCucOrgMinCost(basicInfo.getCucOrgMinCost());
+		temp.setCucOrgMinPerType(basicInfo.getCucOrgMinPerType());
+		temp.setOperateOrder("02new");
+		temp.setOperateType("UPDATE");
+		temp.setIsRealtime("Y");
+		return temp;
+	}
+	
+	/**
+	 *  将原始数据转换为EmpBasicTemp 实体
+	 * @param oldInfo
+	 * @return
+	 */
+	public EmpBasicTemp copyOldBasicInfoProperties(EmpBasic oldInfo) {
+		EmpBasicTemp temp = new EmpBasicTemp();
+		BeanUtils.copyProperties(oldInfo, temp, new String[] {"attribute1",
+				"attribute2",
+				"attribute3",
+				"attribute4",
+				"attribute5",
+				"attribute6",
+				"attribute7",
+				"attribute8",
+				"attribute9",
+				"attribute10"});
+		
+		temp.setOperateOrder("01old");
+		
+		return temp;
+	}
+	
+
+	/**
+	 *  将修改后的数据转换为EmpBasicTemp 实体
+	 * @param oldInfo
+	 * @return
+	 */
+	public EmpBasicTemp copyNewBasicInfoProperties(EmpBasicDetail newInfo) {
+		EmpBasicTemp temp = new EmpBasicTemp();
+		BeanUtils.copyProperties(newInfo, temp, new String[] {"attribute1",
+				"attribute2",
+				"attribute3",
+				"attribute4",
+				"attribute5",
+				"attribute6",
+				"attribute7",
+				"attribute8",
+				"attribute9",
+				"attribute10"});
+		
+		temp.setOperateOrder("02upt");
+		temp.setOperateType("UPDATE");
+		temp.setOperateState(newInfo.getOpt());
+		temp.setIsRealtime("Y");
+		
+		return temp;
+	}
+	
+	/**
+	 *  将修改后的数据转换为EmpBasicTemp 实体
+	 * @param oldInfo
+	 * @return
+	 */
+	public EmpBasicFinal copyNewBasicInfoPropertiesToFinal(EmpBasicDetail newInfo) {
+		EmpBasicFinal temp = new EmpBasicFinal();
+		BeanUtils.copyProperties(newInfo, temp, new String[] {"attribute1",
+				"attribute2",
+				"attribute3",
+				"attribute4",
+				"attribute5",
+				"attribute6",
+				"attribute7",
+				"attribute8",
+				"attribute9",
+				"attribute10"});
+//		temp.setOperateOrder("02upt");
+		temp.setOperateType("UPDATE");
+		temp.setOperateState(newInfo.getOpt());
+		temp.setIsRealtime("Y");
+		
+		return temp;
+	}
+	
+	
+	
 	
 	@Override
 	public Integer deleteEmpBasic(Long id) {
@@ -375,4 +602,17 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 		page.setTotal(totalCount);
 		return page.setRecords(this.mapper.queryOrgListByName(page,params));
 	}
+
+	@Override
+	public EmpBasicDetail queryPsnBasicDetailById(Long personId) {
+		
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("personId", personId);
+		
+		EmpBasicDetail basicDetail = this.mapper.queryPsnBasicDetailById(params);
+		
+		
+		return basicDetail;
+	}
+
 }

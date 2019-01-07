@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.baomidou.mybatisplus.plugins.Page;
 import cn.chinaunicom.platform.entity.BilltempletB;
-import cn.chinaunicom.platform.service.BilltempletBService;
+import cn.chinaunicom.platform.service.IBilltempletBService;
 import cn.chinaunicom.platform.utils.MessageResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -42,7 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BilltempletBController {
 
 	@Autowired
-	BilltempletBService service;
+	IBilltempletBService service;
 	
 	@ApiOperation(value = "列表", notes = "列表", response = BilltempletB.class, httpMethod = "GET")
     @ApiImplicitParams({

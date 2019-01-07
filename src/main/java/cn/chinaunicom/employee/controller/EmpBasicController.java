@@ -39,7 +39,7 @@ import io.swagger.annotations.ApiResponses;
  * @version V1.0
  * **************************************
  */
-@Api(value = "", tags = "")
+@Api(value = "全员花名册", tags = "全员花名册")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/empBasic")

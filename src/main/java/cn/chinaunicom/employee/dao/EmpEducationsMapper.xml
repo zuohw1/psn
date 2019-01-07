@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chinaunicom.employee.dao.EmpEducationsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chinaunicom.employee.entity.EmpEducations">
+        <id column="emp_education_id" property="empEducationId" />
+        <result column="person_id" property="personId" />
+        <result column="educated_start_date" property="educatedStartDate" />
+        <result column="educated_end_date" property="educatedEndDate" />
+        <result column="college_id" property="collegeId" />
+        <result column="college_name" property="collegeName" />
+        <result column="full_time_flag" property="fullTimeFlag" />
+        <result column="profession" property="profession" />
+        <result column="education_experience" property="educationExperience" />
+        <result column="degree" property="degree" />
+        <result column="educated_info" property="educatedInfo" />
+        <result column="learning_forms" property="learningForms" />
+        <result column="degree_date" property="degreeDate" />
+        <result column="degree_type" property="degreeType" />
+        <result column="second_degree_type" property="secondDegreeType" />
+        <result column="work_education_flag" property="workEducationFlag" />
+        <result column="education_high_flag" property="educationHighFlag" />
+        <result column="degree_high_flag" property="degreeHighFlag" />
+        <result column="education_certificate_num" property="educationCertificateNum" />
+        <result column="college_of_degree" property="collegeOfDegree" />
+        <result column="degree_certificate_num" property="degreeCertificateNum" />
+        <result column="same_education_experience" property="sameEducationExperience" />
+        <result column="equal_graduated" property="equalGraduated" />
+        <result column="profession_type" property="professionType" />
+        <result column="profession_second_type" property="professionSecondType" />
+        <result column="profession_second" property="professionSecond" />
+        <result column="period_of_schooling" property="periodOfSchooling" />
+        <result column="description" property="description" />
+        <result column="create_by" property="createBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="attribute1" property="attribute1" />
+        <result column="attribute2" property="attribute2" />
+        <result column="attribute3" property="attribute3" />
+        <result column="attribute4" property="attribute4" />
+        <result column="attribute5" property="attribute5" />
+        <result column="attribute6" property="attribute6" />
+        <result column="attribute7" property="attribute7" />
+        <result column="attribute8" property="attribute8" />
+        <result column="attribute9" property="attribute9" />
+        <result column="attribute10" property="attribute10" />
+        <result column="synchronization_state" property="synchronizationState" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        emp_education_id, person_id, educated_start_date, educated_end_date, college_id, college_name, full_time_flag, profession, education_experience, degree, educated_info, learning_forms, degree_date, degree_type, second_degree_type, work_education_flag, education_high_flag, degree_high_flag, education_certificate_num, college_of_degree, degree_certificate_num, same_education_experience, equal_graduated, profession_type, profession_second_type, profession_second, period_of_schooling, description, create_by, create_date, update_by, update_date, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7, attribute8, attribute9, attribute10, synchronization_state
+    </sql>
+
+</mapper>

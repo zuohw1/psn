@@ -7,6 +7,9 @@ spring:
 mybatis-plus:
   global-config:
     refresh-mapper: true    # mapper 热加载
+    
+server:
+  port: 8081
 
 
 
