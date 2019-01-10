@@ -86,7 +86,7 @@
 			) 
 			AND enabled_flag = 'Y' 
 		ORDER BY
-			lookup_type
+			lookup_type,row_num
     </select>
 
 </mapper>

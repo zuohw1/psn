@@ -507,98 +507,118 @@
 	<!-- 获取进入本企业途径档案(channel和otherChannel) -->
 	<select id ="queryJoinCucChannel4BasicInfoEdit" resultType = "java.util.HashMap">
 			SELECT
-				* 
-			FROM
-				(
-			SELECT
-				ffv.FLEX_VALUE_SET_ID AS flexValuesSetId,
-				ffv.FLEX_VALUE_ID AS flexValueId,
-				ffv.FLEX_VALUE AS flexValue,
-				ffv.PARENT_FLEX_VALUE_LOW AS parentFlexValueLow,
-				ffv.attribute_sort_order AS ord 
-			FROM
-				fnd_flex_values ffv,
-				fnd_flex_value_sets ffvs 
-			WHERE
-				ffvs.flex_value_set_name = 'CNC_JRZTJ' 
-				AND ffv.flex_value_set_id = ffvs.flex_value_set_id 
-				AND ffv.enabled_flag = 'Y' UNION
-			SELECT DISTINCT
-				- 9999 AS flexValuesSetId,
-				- 9999 AS flexValueId,
-				' ' AS flexValue,
-				ffv2.PARENT_FLEX_VALUE_LOW AS parentFlexValueLow,
-				MAX( ffv2.attribute_sort_order ) + 1 ord 
-			FROM
-				fnd_flex_values ffv2,
-				fnd_flex_value_sets ffvs2 
-			WHERE
-				ffvs2.flex_value_set_name = 'CNC_JRZTJ' 
-				AND ffv2.flex_value_set_id = ffvs2.flex_value_set_id 
-				AND ffv2.enabled_flag = 'Y' 
-			GROUP BY
-				ffv2.parent_flex_value_low 
-				) a 
-			ORDER BY
-				ord
+		      	CONCAT(a.parentFlexValueLow,'--',a.flexValue) name,
+			  	CONCAT(a.parentFlexValueLow,'--',a.flexValue) value
+		      FROM
+		        (
+		      SELECT
+		        ffv.FLEX_VALUE_SET_ID AS flexValuesSetId,
+		        ffv.FLEX_VALUE_ID AS flexValueId,
+		        ffv.FLEX_VALUE AS flexValue,
+		        ffv.PARENT_FLEX_VALUE_LOW AS parentFlexValueLow,
+		        ffv.attribute_sort_order AS ord 
+		      FROM
+		        fnd_flex_values ffv,
+		        fnd_flex_value_sets ffvs 
+		      WHERE
+		        ffvs.flex_value_set_name = 'CNC_JRZTJ' 
+		        AND ffv.flex_value_set_id = ffvs.flex_value_set_id 
+		        AND ffv.enabled_flag = 'Y' UNION
+		      SELECT DISTINCT
+		        - 9999 AS flexValuesSetId,
+		        - 9999 AS flexValueId,
+		        ' ' AS flexValue,
+		        ffv2.PARENT_FLEX_VALUE_LOW AS parentFlexValueLow,
+		        MAX( ffv2.attribute_sort_order ) + 1 ord 
+		      FROM
+		        fnd_flex_values ffv2,
+		        fnd_flex_value_sets ffvs2 
+		      WHERE
+		        ffvs2.flex_value_set_name = 'CNC_JRZTJ' 
+		        AND ffv2.flex_value_set_id = ffvs2.flex_value_set_id 
+		        AND ffv2.enabled_flag = 'Y' 
+		      GROUP BY
+		        ffv2.parent_flex_value_low 
+		        ) a 
+		      ORDER BY
+		        ord
+	</select>
+	
+	<!-- 获取进入本企业途径（new）相关档案(channelnew和otherChannelnew以及channelMarkNew) -->
+	<select id = "queryJoinCucChannelNew4BasicInfoEdit" resultType = "java.util.HashMap">
+		SELECT
+			FLEX_VALUE value,
+			FLEX_VALUE name,
+			flex_value_set_name flexset,
+			PARENT_FLEX_VALUE_LOW parentName
+		FROM
+			fnd_flex_value_sets,
+			fnd_flex_values 
+		WHERE
+			fnd_flex_value_sets.flex_value_set_id = fnd_flex_values.flex_value_set_id 
+			AND fnd_flex_value_sets.flex_value_set_name IN ( 'CUC_JRTJ', 'CUC_JRZTJ', 'CUC_JRTJSM' )
+			and fnd_flex_values.ENABLED_FLAG = 'Y'  
+			order by fnd_flex_values.flex_value_set_id,fnd_flex_values.PARENT_FLEX_VALUE_LOW
 	</select>
 	
 	<!-- 根据人员Id查询基本信息 -->
 	<select id="queryPsnBasicDetailById" resultType="cn.chinaunicom.employee.entity.EmpBasicDetail">
 		SELECT
-			t1.create_by createBy,
+			/* t1.create_by createBy,
 			t1.update_by updateBy,
 			DATE_FORMAT(t1.create_date, '%Y-%m-%d %H:%i:%s') createDate, 
-			DATE_FORMAT(t1.update_date, '%Y-%m-%d %H:%i:%s') updateDate,
+			DATE_FORMAT(t1.update_date, '%Y-%m-%d %H:%i:%s') updateDate, */
 			DATE_FORMAT( t1.effective_start_date, '%Y-%m-%d' ) effectiveStartDate,
 			DATE_FORMAT( t1.effective_end_date, '%Y-%m-%d' ) effectiveEndDate,
+			DATE_FORMAT( Now(), '%Y-%m-%d' ) currentSysDate,
 			t1.person_id personId, /*主键*/
+			t1.org_id orgId, /*组织主键*/
 			t1.full_name fullName, /*姓名*/
 			t1.employee_number employeeNumber, /*员工编号*/
-			t1.disability_flag disabilityFlagValue, /*是否残疾#值*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'YES_NO' AND lookup_code = t1.disability_flag ) disabilityFlag, /*是否残疾*/
-				t1.immigrated_foreign_flag immigratedForeignFlagValue, /*是移居国外#值*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'YES_NO' AND lookup_code = t1.immigrated_foreign_flag ) immigratedForeignFlag, /*是否残疾*/
+			t1.disability_flag disabilityFlag, /*是否残疾#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'YES_NO' AND lookup_code = t1.disability_flag ) disabilityFlagName, /*是否残疾*/
+				t1.immigrated_foreign_flag immigratedForeignFlag, /*是移居国外#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'YES_NO' AND lookup_code = t1.immigrated_foreign_flag ) immigratedForeignFlagName, /*是否残疾*/
 			t1.name_of_letters nameOfLetters, /*全拼*/
 			t1.user_person_type userPersonType, /*用工类型*/
 			t1.national_identifier nationalIdentifier, /*身份证号*/
 			DATE_FORMAT( t1.date_of_birth, '%Y-%m-%d' ) AS dateOfBirth, /*出生日期*/
 		CASE
 			WHEN t1.sex = 'M' THEN
-			'男性' 
+			'男' 
 			WHEN t1.sex = 'F' THEN
-			'女性' ELSE '' 
-			END AS sex, /*性别*/
-			t1.sex sexValue , /*性别#值*/
-			t1.blood_type bloodTypeValue, /*血型#值*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'BLOOD_TYPE' AND lookup_code = t1.blood_type ) bloodType, /*血型*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'NATIONALITY' AND lookup_code = t1.nationality ) nationality, /* 国籍*/
-			t1.nationality nationalityValue, /* 国籍#值*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_RACE' AND lookup_code = t1.nation ) nation, /* 民族*/
-			t1.nation nationValue, /* 民族#值*/
+			'女' ELSE '' 
+			END AS sexName, /*性别*/
+			t1.sex sex , /*性别#值*/
+			t1.blood_type bloodType, /*血型#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'BLOOD_TYPE' AND lookup_code = t1.blood_type ) bloodTypeName, /*血型*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'NATIONALITY' AND lookup_code = t1.nationality ) nationalityName, /* 国籍*/
+			t1.nationality nationality, /* 国籍#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_RACE' AND lookup_code = t1.nation ) nationName, /* 民族*/
+			t1.nation nation, /* 民族#值*/
 			t1.town_of_birth townOfBirth, /*籍贯*/
 			t1.region_of_birth regionOfBirth, /* 出生地*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HUKOU_TYPE' AND lookup_code = t1.household_register_type )  householdRegisterType, /*户口类型*/
-			t1.household_register_type householdRegisterTypeValue, /* 户口类型#值*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HUKOU_LOCN' AND lookup_code = t1.household_register_place ) householdRegisterPlace, /*户口所在地*/
-			t1.household_register_place householdRegisterPlaceValue, /*户口所在地#值*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'MAR_STATUS' AND lookup_code = t1.marital_status ) maritalStatus, /*婚姻状况*/
-			t1.marital_status maritalStatusValue, /*婚姻状况#值*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HEALTH_STATUS' AND lookup_code = t1.state_of_health ) stateOfHealth, /*健康状况*/
-			t1.state_of_health stateOfHealthValue, /*健康状况#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HUKOU_TYPE' AND lookup_code = t1.household_register_type )  householdRegisterTypeName, /*户口类型*/
+			t1.household_register_type householdRegisterType, /* 户口类型#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HUKOU_LOCN' AND lookup_code = t1.household_register_place ) householdRegisterPlaceName, /*户口所在地*/
+			t1.household_register_place householdRegisterPlace, /*户口所在地#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'MAR_STATUS' AND lookup_code = t1.marital_status ) maritalStatusName, /*婚姻状况*/
+			t1.marital_status maritalStatus, /*婚姻状况#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CN_HEALTH_STATUS' AND lookup_code = t1.state_of_health ) stateOfHealthName, /*健康状况*/
+			t1.state_of_health stateOfHealth, /*健康状况#值*/
 			t1.email_address emailAddress, /*邮箱*/
 			t1.social_security_num socialSecurityNum, /*社会保障号*/
-			t1.initial_job_type initialJobTypeValue, /*首次参加工作方式#值*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_JOIN_WAY' AND lookup_code = t1.initial_job_type ) initialJobType, /*首次参加工作方式*/
+			t1.initial_job_type initialJobType, /*首次参加工作方式#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_JOIN_WAY' AND lookup_code = t1.initial_job_type ) initialJobTypeName, /*首次参加工作方式*/
 			/*'' enjoyTaxPerfer,*/
 			DATE_FORMAT( t1.initial_job_start_date, '%Y-%m-%d' ) initialJobStartDate, /*参加工作日期*/
 			DATE_FORMAT( t1.join_cuc_date, '%Y-%m-%d' ) joinCucDate,/*加入本企业日期*/
-			t1.join_cuc_channel joinCucChannel /*加入本企业途径(主)*/,
+			concat(t1.join_cuc_channel,'--',t1.join_cuc_other_channel) joinCucChannel /*加入本企业途径(主)*/,
 			t1.join_cuc_other_channel joinCucOtherChannel /*加入本企业途径(子)*/,
 			t1.specialties, /*特殊专长*/
 			DATE_FORMAT( t1.plan_of_retirement_date, '%Y-%m-%d' ) planOfRetirementDate, /*预计退休时间*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_OTHER_PER_TYPE' AND lookup_code = t1.other_user_person_type ) otherUserPersonType, /*其他人员类型*/
-			t1.other_user_person_type otherUserPersonTypeValue,/*其他人员类型#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_OTHER_PER_TYPE' AND lookup_code = t1.other_user_person_type ) otherUserPersonTypeName, /*其他人员类型*/
+			t1.other_user_person_type otherUserPersonType,/*其他人员类型#值*/
 			t1.join_cuc_other_channel_new joinCucOtherChannelNew, /*加入本企业子途径（新）*/
 			t1.join_cuc_channel_new joinCucChannelNew, /*加入本企业途径（新）*/
 			t1.join_cuc_channel_mark_new joinCucChannelMarkNew, /*加入本企业途径说明（新）*/
@@ -606,10 +626,10 @@
 			t1.interval_working_ages_month intervalWorkingAgesMonth, /*间断工作时间（月）*/
 			DATE_FORMAT( t1.join_office_date, '%Y-%m-%d' ) joinOfficeDate, /*入局时间*/
 			DATE_FORMAT( t1.add_staff_date, '%Y-%m-%d' ) addStaffDate, /*增员时间*/
-			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_ADD_WAY' AND lookup_code = t1.add_staff_type ) addStaffType, /*增员方式*/
-			t1.add_staff_type addStaffTypeValue, /*增员方式#值*/
-			( select meaning from hades_lookups where lookup_type = 'CNC_ADD_WAY_EXPL' AND lookup_code = t1.add_staff_comments) addStaffComments, /*增员方式说明*/
-			t1.add_staff_comments addStaffCommentsValue, /*增员方式说明#值*/
+			( SELECT meaning FROM hades_lookups WHERE lookup_type = 'CNC_ADD_WAY' AND lookup_code = t1.add_staff_type ) addStaffTypeName, /*增员方式*/
+			t1.add_staff_type addStaffType, /*增员方式#值*/
+			( select meaning from hades_lookups where lookup_type = 'CNC_ADD_WAY_EXPL' AND lookup_code = t1.add_staff_comments) addStaffCommentsName, /*增员方式说明*/
+			t1.add_staff_comments addStaffComments, /*增员方式说明#值*/
 			t1.staff_sort_num staffSortNum, /*排序号*/
 			t1.ufida_system_number ufidaSystemNumber  /*用友员工编号*/
 		FROM

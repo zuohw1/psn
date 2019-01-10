@@ -149,6 +149,9 @@ public interface EmpMgrMapper extends HrBaseMapper<EmpBasic> {
 	 */
 	Integer updateAssignmentsAllSynchronizationState(Map<String, Object> paramMap);
 	
+	List<Map<String,String>> queryJoinCucChannel4BasicInfoEdit();
+	
+	List<Map<String,String>> queryJoinCucChannelNew4BasicInfoEdit();
 	
 	
 

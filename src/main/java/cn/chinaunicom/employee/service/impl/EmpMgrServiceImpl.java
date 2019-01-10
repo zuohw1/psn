@@ -1,7 +1,10 @@
 package cn.chinaunicom.employee.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +32,9 @@ import cn.chinaunicom.employee.entity.EmpBasicDetail;
 import cn.chinaunicom.employee.entity.EmpBasicFinal;
 import cn.chinaunicom.employee.entity.EmpBasicTemp;
 import cn.chinaunicom.employee.service.EmpMgrService;
+import cn.chinaunicom.platform.dao.BilltempletBMapper;
 import cn.chinaunicom.platform.service.impl.HrServiceImpl;
+import io.swagger.models.Info;
 
 /**
  * <p>
@@ -104,10 +109,10 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 		//1.查询原始数据
 		EmpBasic oldInfo = this.mapper.selectById(personId);
 		
-		if("corrections".equals(newInfo.getOpt())) {
+		if("CORRECTION".equals(newInfo.getOpt())) {
 			
 			
-			basicFinalMapper.insert(copyNewBasicInfoPropertiesToFinal(entity));
+			basicFinalMapper.insert(copyNewBasicInfoPropertiesToFinal(entity,oldInfo));
 			
 			Map<String,Object> paramMap = new HashMap<String,Object>();
 			paramMap.put("personId", newInfo.getPersonId());
@@ -115,14 +120,14 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 			
 			assignmentsFinalMapper.insert(copyNewAssignmentsAllPropertiesToFinal(assignmentsInfo,entity));
 			
-		}else if("update".equals(newInfo.getOpt())) {
+		}else if("UPDATE".equals(newInfo.getOpt())) {
 			/**
 			 * 1. 处理基本信息
 			 */
 			//插入原始数据
 			basicTempMapper.insert(copyOldBasicInfoProperties(oldInfo));
 			//插入新数据
-			basicTempMapper.insert(copyNewBasicInfoProperties(newInfo));
+			basicTempMapper.insert(copyNewBasicInfoProperties(newInfo,oldInfo));
 			//更新同步状态
 			Map<String,Object> paramMap = new HashMap<String,Object>();
 			paramMap.put("synchronizationState", "2");
@@ -244,8 +249,20 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 	 * @param oldInfo
 	 * @return
 	 */
-	public EmpBasicTemp copyNewBasicInfoProperties(EmpBasicDetail newInfo) {
+	public EmpBasicTemp copyNewBasicInfoProperties(EmpBasicDetail newInfo,EmpBasic oldInfo) {
 		EmpBasicTemp temp = new EmpBasicTemp();
+		
+		BeanUtils.copyProperties(oldInfo, temp, new String[] {"attribute1",
+				"attribute2",
+				"attribute3",
+				"attribute4",
+				"attribute5",
+				"attribute6",
+				"attribute7",
+				"attribute8",
+				"attribute9",
+				"attribute10"});
+		
 		BeanUtils.copyProperties(newInfo, temp, new String[] {"attribute1",
 				"attribute2",
 				"attribute3",
@@ -257,6 +274,12 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 				"attribute9",
 				"attribute10"});
 		
+		// 加入本企业途径需要特殊处理
+		if (!StringUtils.isEmpty(newInfo.getJoinCucChannel())) {
+			String[] jonCucChannelAry = newInfo.getJoinCucChannel().split("--");
+			temp.setJoinCucChannel(jonCucChannelAry[0]);
+			temp.setJoinCucOtherChannel(jonCucChannelAry[1]);
+		}
 		temp.setOperateOrder("02upt");
 		temp.setOperateType("UPDATE");
 		temp.setOperateState(newInfo.getOpt());
@@ -270,8 +293,19 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 	 * @param oldInfo
 	 * @return
 	 */
-	public EmpBasicFinal copyNewBasicInfoPropertiesToFinal(EmpBasicDetail newInfo) {
+	public EmpBasicFinal copyNewBasicInfoPropertiesToFinal(EmpBasicDetail newInfo, EmpBasic oldInfo) {
 		EmpBasicFinal temp = new EmpBasicFinal();
+		BeanUtils.copyProperties(oldInfo, temp, new String[] {"attribute1",
+				"attribute2",
+				"attribute3",
+				"attribute4",
+				"attribute5",
+				"attribute6",
+				"attribute7",
+				"attribute8",
+				"attribute9",
+				"attribute10"});
+		
 		BeanUtils.copyProperties(newInfo, temp, new String[] {"attribute1",
 				"attribute2",
 				"attribute3",
@@ -283,6 +317,14 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 				"attribute9",
 				"attribute10"});
 //		temp.setOperateOrder("02upt");
+		// 加入本企业途径需要特殊处理
+		if(!StringUtils.isEmpty(newInfo.getJoinCucChannel())) {
+			String[] jonCucChannelAry = newInfo.getJoinCucChannel().split("--");
+			temp.setJoinCucChannel(jonCucChannelAry[0]);
+			temp.setJoinCucOtherChannel(jonCucChannelAry[1]);
+		}
+		
+		
 		temp.setOperateType("UPDATE");
 		temp.setOperateState(newInfo.getOpt());
 		temp.setIsRealtime("Y");
@@ -610,9 +652,70 @@ public class EmpMgrServiceImpl extends HrServiceImpl<EmpMgrMapper, EmpBasic> imp
 		params.put("personId", personId);
 		
 		EmpBasicDetail basicDetail = this.mapper.queryPsnBasicDetailById(params);
-		
-		
+		AssignmentsInfo assignmentsInfo = this.mapper.queryPsnAssignmentsById(params);
+		basicDetail.setCucOrgMinCost(assignmentsInfo.getCucOrgMinCost());
+		basicDetail.setCucOrgMinPerType(assignmentsInfo.getCucOrgMinPerType());
 		return basicDetail;
+	}
+
+	@Override
+	public List<Map<String, String>> queryJoinCucChannel4BasicInfoEdit() {
+		
+		
+		List<Map<String,String>> retList =  this.mapper.queryJoinCucChannel4BasicInfoEdit();
+		
+		return retList;
+	}
+
+	/**
+	 * 返回数据格式eg：
+	 * 	{"CUC_JRTJ":["社会招聘","劳务派遣"],
+		 "CUC_JRZTJ":{
+							"社会招聘":["紧密型业务外包人员转化","劳务派遣转化","社会招聘"],
+							"劳务派遣":["接收应届毕业生","型业务外包转劳务派遣","通过劳务派遣公司招用"]
+	      },
+	     "CUC_JRTJSM":{"社会招聘":["无","从其他运营商流入"],"劳务派遣":["无"]}
+	}
+	
+	 */
+	@Override
+	public Map<String, Object> queryJoinCucChannelNew4BasicInfoEdit() {
+		
+		List<Map<String,String>> tempList = this.mapper.queryJoinCucChannelNew4BasicInfoEdit();
+		
+		Map<String,Object> retMap = new HashMap<>();
+		//1.首先处理加入本企业途径(新)
+		List<String> jrtjList = new ArrayList<>();
+		for(Map<String,String> temp : tempList) {
+			if(temp.get("flexset").equals("CUC_JRTJ")) {
+				jrtjList.add(temp.get("name"));
+			}
+		}
+		//2.根据加入途径找下级对应的子途径和加入途径说明
+		Map<String,List<String>> jrztjMap = new LinkedHashMap<>();
+		Map<String,List<String>> jrtjsmMap = new LinkedHashMap<>();
+		for(String jrtj:jrtjList) {
+			List<String> jrztjList = new ArrayList<>();
+			List<String> jrtjsmList = new ArrayList<>();
+			for(Map<String,String> temp : tempList) {
+				if(jrtj.equals(temp.get("parentName")) && temp.get("flexset").equals("CUC_JRZTJ")) {
+					jrztjList.add(temp.get("name"));
+				}
+				else if(jrtj.equals(temp.get("parentName")) && temp.get("flexset").equals("CUC_JRTJSM")) {
+					jrtjsmList.add(temp.get("name"));
+				} 
+			}
+			jrztjMap.put(jrtj, jrztjList);
+			jrtjsmMap.put(jrtj, jrtjsmList);
+		}
+		
+		
+		retMap.put("CUC_JRTJ", jrtjList);
+		retMap.put("CUC_JRZTJ", jrztjMap);
+		retMap.put("CUC_JRTJSM", jrtjsmMap);
+		
+		
+		return retMap;
 	}
 
 }

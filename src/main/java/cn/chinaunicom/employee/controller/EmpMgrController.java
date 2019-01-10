@@ -365,20 +365,56 @@ public class EmpMgrController {
     public ResponseEntity<Object> queryRefSelectDataByBillType(
             @RequestParam(value = "billTypeCode", required = true) String billTypeCode)
 	{
-		//EmpBasicDetail empBasicDetail = service.queryPsnBasicDetailById(personId);
+		// EmpBasicDetail empBasicDetail = service.queryPsnBasicDetailById(personId);
+		// 获取hades_lookup 表中的档案数据
+		Map<String, List<Map<String, String>>> refSelectData = billtempletBService
+				.queryRefSelectDataByBillTypeCode(billTypeCode);
+
+		// service
+		List<Map<String, String>> list = this.service.queryJoinCucChannel4BasicInfoEdit();
+		if (list.size() > 0) {
+			refSelectData.put("CNC_JRZTJ", list);
+		}
+
+		//refSelectData.putAll(this.service.queryJoinCucChannelNew4BasicInfoEdit());
+
+		if (refSelectData != null) {
+			return new ResponseEntity<>(refSelectData, HttpStatus.OK);
+		} else {
+			MessageResponse dto = new MessageResponse();
+			String msg = "未查询到档案数据";
+			dto.setMsg(msg);
+			return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
+		}
+
+	}
+	
+	@ApiOperation(value = "根据模板编码获取档案数据2", notes = "根据模板编码获取档案数据2", response = List.class, httpMethod = "GET")
+    @ApiImplicitParams({})
+    @ApiResponses({
+            @ApiResponse(
+                    code = 200,
+                    message = "获取档案数据成功",
+                    response = Page.class
+            ),
+            @ApiResponse(
+                    code = 404,
+                    message = "未查询到档案数据"
+            )
+    })
+	@GetMapping("/queryJRTJRefData")
+	public ResponseEntity<Object> queryJRTJRefData(){
 		
-		Map<String, List<Map<String, String>>> refSelectData= billtempletBService.queryRefSelectDataByBillTypeCode(billTypeCode);
-        if(refSelectData!=null ) {
-        	return new ResponseEntity<>(refSelectData, HttpStatus.OK);
-        }else {
-        	MessageResponse dto = new MessageResponse();
-        	String msg = "未查询到档案数据";
-            dto.setMsg(msg);
-            return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
-        }
-      
-      
-    }
+		Map<String,Object> retMap = this.service.queryJoinCucChannelNew4BasicInfoEdit();
+		if (retMap != null && retMap.size()>0) {
+			return new ResponseEntity<>(retMap, HttpStatus.OK);
+		} else {
+			MessageResponse dto = new MessageResponse();
+			String msg = "未查询到档案数据";
+			dto.setMsg(msg);
+			return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
+		}
+	}
 	
 	@ApiOperation(value = "保存", notes = "保存", response = MessageResponse.class, httpMethod = "POST")
 	@ApiImplicitParams({

@@ -85,7 +85,7 @@
         <result column="batch_num" property="batchNum" />
         <result column="is_pass" property="isPass" />
         <result column="document_name" property="documentName" />
-        <result column="document_files" property="documentFiles" />
+        <result column="document_files" property="documentFiles" typeHandler="org.apache.ibatis.type.BlobTypeHandler"  />
         <result column="line_number" property="lineNumber" />
         <result column="go_org_id" property="goOrgId" />
         <result column="respid" property="respid" />
@@ -121,7 +121,7 @@
         <result column="positionnum" property="positionnum" />
         <result column="salarynum" property="salarynum" />
         <result column="document_fileid" property="documentFileid" />
-        <result column="document_filename" property="documentFilename" />
+        <result column="document_filename" property="documentFilename"/>
         <result column="wfremark" property="wfremark" />
         <result column="remark" property="remark" />
         <result column="pay_regulation" property="payRegulation" />

@@ -138,6 +138,19 @@ public interface EmpMgrService extends IHrService<EmpBasic> {
 	 * @return
 	 */
 	public Page<Map<String, Object>> queryOrgListByName(Integer pageNumber,Integer pageSize,String orgName);
+	
+	/**
+	 * 查询加入本企业途径档案
+	 * @return
+	 */
+	public List<Map<String,String>> queryJoinCucChannel4BasicInfoEdit();
+	
+	/**
+	 * 查询加入本企业途径(新)相关档案
+	 * （途径，子途径，途径备注）
+	 * @return
+	 */
+	public Map<String,Object> queryJoinCucChannelNew4BasicInfoEdit();
 
 
 }
